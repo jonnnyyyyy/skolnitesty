@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test č. 2 – procvičování</title>
+<style>
+:root{--teal:#00a79d;--tealD:#008a82;--bg:#f5f5f5;--ink:#1d2125;--grey:#6a737b;--ok:#2e7d32;--bad:#c62828}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.5}
+a{color:var(--teal);cursor:pointer;text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--bg);padding:20px 8vw 18px}
+.crumbs{font-size:15px;color:var(--grey)}.crumbs b{color:var(--ink);font-weight:400}
+h1{margin:10px 0 0;font-size:34px;display:flex;align-items:center;gap:14px}
+h1 i{width:38px;height:38px;border:2px solid #e91e8c;border-radius:6px;display:inline-block}
+main{padding:28px 8vw 60px}
+.info{background:#f8f9fa;border-radius:8px;padding:20px;margin-bottom:26px}
+.btn{background:var(--teal);color:#fff;border:0;border-radius:8px;padding:13px 28px;font-size:17px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--tealD)}.btn.g{background:#6c757d;padding:10px 22px;font-size:16px}.btn.g:hover{background:#565e64}
+.layout{display:grid;grid-template-columns:1fr 280px;gap:40px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
+.q{border-bottom:1px solid #ddd;padding:26px 0}
+.qh{display:flex;flex-wrap:wrap;gap:12px 40px;align-items:baseline;margin-bottom:22px}
+.qh h2{margin:0;font-size:28px;font-weight:500}.qh span{font-size:15px}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.qt{margin:18px 0}.qt.after{margin:12px 0 0}
+.hint{font-size:14px;color:var(--grey);margin:14px 0 6px}
+input[type=text]{border:1px solid #adb5bd;border-radius:8px;padding:11px;font-size:17px;width:120px;font-family:inherit}
+input.s{width:80px}
+input[type=text]:disabled{background:#e9ecef}
+input.right{border-color:var(--ok)}input.wrong{border-color:var(--bad)}
+.row{margin:10px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.opt{display:block;margin:8px 0;cursor:pointer}
+.mark{font-weight:700}
+.nav h3{font-size:22px;margin:0 0 14px}
+.grid{display:flex;flex-wrap:wrap;gap:6px}
+.grid button{width:44px;height:40px;background:#fff;border:1px solid #adb5bd;font-size:15px;cursor:pointer;font-family:inherit}
+.grid button.cur{border:2px solid #000}.grid button.done{background:#d6dde2}
+.grid button.r{border-color:var(--ok);background:#e6f4e7}.grid button.w{border-color:var(--bad);background:#fbe9e9}
+.timer{display:inline-block;border:1px solid #d32f2f;padding:8px 12px;margin-bottom:12px}
+table.sum{border-collapse:collapse;width:100%;margin-bottom:10px}
+table.sum th{text-align:right;color:var(--teal);padding:6px 14px;width:140px;font-weight:600}
+table.sum td{padding:6px 14px}table.sum tr{border-top:1px solid #ddd}table.sum tr:last-child{border-bottom:1px solid #ddd}
+.fb{margin-top:10px;font-size:15px;background:#fff7e0;padding:8px 12px;border-radius:6px}
+.tabs{display:flex;gap:22px;margin-bottom:20px;border-bottom:1px solid #ddd}
+.tabs a{padding:8px 2px;color:var(--grey)}.tabs a.on{color:var(--teal);border-bottom:3px solid var(--teal)}
+.th{border-bottom:1px solid #ddd;padding:14px 0}.th p{margin:.2em 0}
+.foot{margin-top:30px;display:flex;justify-content:space-between}
+.poly{margin:6px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="crumbs">440-2104/01 (2026/2027 ZS) / Příklady k procvičení / <b>Test č. 2</b></div>
+  <h1><i></i>Test č. 2</h1>
+</header>
+<main id="app"></main>
+
+<script>
+/* ---------- pomocné ---------- */
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=R(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const norm=s=>{s=String(s).replace(/\s/g,'').replace('−','-').replace(/^\+/,'').replace(',','.').toUpperCase();
+ if(s.includes('.')){s=s.replace(/0+$/,'').replace(/\.$/,'').replace(/^(-?)\./,'$10.')}
+ return s.replace(/^(-?)0+(?=[0-9A-F])/,'$1')};
+const cz=s=>String(s).replace('.',',');
+const pts=p=>p.toFixed(2).replace('.',',');
+const h2=n=>n.toString(16).toUpperCase().padStart(2,'0');
+
+/* ---------- varianty výběrových otázek ---------- */
+const POLY=`Je dán polynom číselné soustavy<div class="poly">a<sub>n-1</sub>b<sup>n-1</sup>+a<sub>n-2</sub>b<sup>n-2</sup>+...+a<sub>1</sub>b<sup>1</sup>+a<sub>0</sub>b<sup>0</sup>+a<sub>-1</sub>b<sup>-1</sup>+a<sub>-2</sub>b<sup>-2</sup>+...+a<sub>-m</sub>b<sup>-m</sup></div>kde a<sub>i</sub> a b jsou prvky polynomu a potom<br>`;
+const W1=['je libovolná váha čísla v číselné soustavě.','je znaménko čísla.','jiná možnost.'];
+const POLYV=[
+ {s:'a<sub>i</sub> ......',c:'je v rozsahu 0 až b-1.',w:['je v rozsahu 0 až b.','jiná možnost.','je v rozsahu -b až b-1.','je v rozsahu n až m.']},
+ {s:'b<sub>n-1</sub> ......',c:'je nejvíce významová váha čísla.',w:[...W1,'je nejméně významová váha čísla.']},
+ {s:'b<sub>-m</sub> ......',c:'je nejméně významová váha čísla.',w:[...W1,'je nejvíce významová váha čísla.']}
+];
+const CODES={sm:'v přímém kódu (sign and magnitude).',ex:'v kódu posunutí (offset binary, excess-K).',tc:"ve dvojkovém doplňku (2's complement).",oc:'v jednotkovém doplňku (ones complement).'};
+const EXPRV=[
+ {e:'2<sup>n</sup> - A.',c:'tc'},{e:'bitwise-not (A) + 1.',c:'tc'},{e:'bitwise-not (A).',c:'oc'},{e:'K + A.',c:'ex'}
+];
+const mc=(html,correct,wrong,pts)=>{const o=shuf([correct,...wrong]);
+ return{type:'mc',html,options:o,correct:o.indexOf(correct),pts}};
+
+/* ---------- generátory ---------- */
+const GEN={
+ poly(){const v=POLYV[R(0,POLYV.length-1)];return mc(POLY+v.s+'<div class="hint">Vyberte jednu z nabízených možností:</div>',v.c,v.w,1)},
+ expr(){const v=EXPRV[R(0,EXPRV.length-1)];const c=CODES[v.c];
+  const all=[...Object.values(CODES),'jiná možnost.'];
+  return mc(`Je dán výraz<div class="poly">${v.e}</div>Uvedený výraz se použije k výpočtu záporného čísla k číslu A, když se bude jednat o zobrazení<div class="hint">Vyberte jednu z nabízených možností:</div>`,c,all.filter(x=>x!==c),1)},
+ signed(){const b=[8,10,12,16][R(0,3)];
+  return{type:'num',inline:true,pts:1,html:`Pro zobrazení čísla je použito ${b} bitů.<br>Jaký je rozsah zobrazení pro signed integer?`,
+  fields:[{label:'Rozsah zobrazení je od',correct:String(-(2**(b-1)))},{label:'do',correct:String(2**(b-1)-1)}]}},
+ shift(){const b=[8,12,16][R(0,2)],K=R(1,2**(b-1));
+  return{type:'num',inline:true,pts:1,html:`Pro zobrazení čísla je použito ${b} bitů.<br>Jaký je rozsah zobrazení pro posunutí s hodnotou ${K.toLocaleString('cs')}?`,
+  fields:[{label:'Rozsah zobrazení je od',correct:String(-K)},{label:'do',correct:String(2**b-1-K)}]}},
+ coef(){const b=R(3,9);
+  return{type:'num',inline:true,pts:.5,html:`Číselná soustava se základem ${b} používá koeficienty`,
+  fields:[{label:'od',s:1,correct:'0'},{label:'až do',s:1,suffix:'.',correct:String(b-1)}],after:'Koeficienty uvádějte v pořadí od nejnižšího po nejvyšší koeficient.'}},
+ base(){const B=R(3,9),a=R(1,60),b=R(1,9);let num=b,den=10,f='';
+  for(let i=0;i<2;i++){num*=B;f+=Math.floor(num/den);num%=den}
+  return{type:'num',pts:1,html:`Zadané dekadické číslo převeďte do soustavy se základem ${B}. Výsledek zaokrouhlete na dvě pozice ve zlomkové části směrem k nule.<br><br>${a}.${b}<sub>D</sub> =`,
+  fields:[{label:'',suffix:`<sub>${B}</sub>`,correct:a.toString(B)+'.'+f}],bare:true}},
+ frac(){const m=R(3,5),k=2*R(0,2**(m-1)-1)+1,v=k/2**m;
+  return{type:'num',pts:.5,html:`Převeďte decimální desetinné číslo do binární soustavy. Použijte radix tečku.<br><br>${v}<sub>D</sub> =`,
+  fields:[{label:'',suffix:'<sub>B</sub>',correct:'0.'+k.toString(2).padStart(m,'0')}],bare:true}},
+ neg(){const N=R(3,60),b=R(N+20,N+60);
+  return{type:'num',pts:1,html:`Je dané decimální číslo -${N}.<br>Stanovte hodnotu skupiny 8 bitů jako hexa číslo, pokud uvedené číslo bude zobrazeno jako:`,
+  fields:[{label:'Absolutní hodnota |A|',suffix:'<sub>H</sub>',strict:1,correct:h2(N)},
+   {label:'Dvojkový doplněk A<sub>2</sub>',suffix:'<sub>H</sub>',strict:1,correct:h2(256-N)},
+   {label:'Přímý kód A<sub>SM</sub>',suffix:'<sub>H</sub>',strict:1,correct:h2(128+N)},
+   {label:`S posunutím b=${b}; A<sub>P</sub>`,suffix:'<sub>H</sub>',strict:1,correct:h2(b-N)}],after:'Odpovídejte vždy dvěma hexa číslicemi.'}}
+};
+
+/* ---------- stav ---------- */
+const S={qs:[],ans:[],checked:[],cur:0,done:false,left:900,t:null,start:null,end:null,view:'home'};
+const app=document.getElementById('app');
+const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+const fmtD=d=>d.toLocaleString('cs',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+
+function newTest(){
+ const list=[GEN.poly(),GEN.expr(),GEN.neg(),GEN.base(),GEN.coef(),GEN.frac(),Math.random()<.5?GEN.signed():GEN.shift()];
+ S.qs=shuf(list);S.ans=S.qs.map(q=>q.type==='mc'?null:q.fields.map(()=>''));
+ S.checked=S.qs.map(()=>false);S.cur=0;S.done=false;S.left=900;S.start=new Date();
+ clearInterval(S.t);S.t=setInterval(()=>{S.left--;if(S.left<=0)finish();else{const t=document.getElementById('tm');if(t)t.textContent=fmt(S.left)}},1000);
+ S.view='test';render();
+}
+function finish(){clearInterval(S.t);S.done=true;S.end=new Date();S.view='review';render()}
+const fOK=(f,v)=>f.strict?String(v).trim().toUpperCase()===f.correct:norm(v)===norm(f.correct);
+function isRight(i){const q=S.qs[i],a=S.ans[i];return q.type==='mc'?a===q.correct:q.fields.every((f,k)=>fOK(f,a[k]))}
+const score=()=>S.qs.reduce((s,q,i)=>s+(isRight(i)?q.pts:0),0);
+const total=()=>S.qs.reduce((s,q)=>s+q.pts,0);
+
+/* ---------- vykreslení ---------- */
+function qBody(i,show){
+ const q=S.qs[i],a=S.ans[i],lock=show;let h=`<div class="qt">${q.html}</div>`;
+ if(q.type==='mc'){
+  h+=q.options.map((o,k)=>`<label class="opt"><input type="radio" name="q${i}" ${a===k?'checked':''} ${lock?'disabled':''} onchange="S.ans[${i}]=${k};mark(${i})"> ${o}${show&&k===q.correct?' <span class="ok mark">✓</span>':''}${show&&a===k&&k!==q.correct?' <span class="bad mark">✗</span>':''}</label>`).join('');
+  if(show&&!isRight(i))h+=`<div class="fb">Správná odpověď: <b>${q.options[q.correct]}</b></div>`;
+ }else{
+  const inp=q.fields.map((f,k)=>{const r=show&&fOK(f,a[k]);
+   return `${f.label?`<span>${f.label}</span>`:''}<input type="text" autocomplete="off" class="${f.s?'s ':''}${show?(r?'right':'wrong'):''}" value="${a[k].replace(/"/g,'&quot;')}" ${lock?'disabled':''} oninput="S.ans[${i}][${k}]=this.value;mark(${i})">${f.suffix||''}${show?`<span class="${r?'ok':'bad'} mark">${r?'✓':'✗'}</span>`:''}`});
+  h+=q.inline?`<div class="row">${inp.join(' ')}</div>`:inp.map(x=>`<div class="row">${x}</div>`).join('');
+  if(q.after)h+=`<div class="qt after">${q.after}</div>`;
+  if(show&&!isRight(i))h+=`<div class="fb">Správná odpověď: <b>${q.fields.map(f=>cz(f.correct)).join(' … ')}</b></div>`;
+ }
+ return h;
+}
+function mark(i){const b=document.querySelectorAll('.grid button')[i];if(b)b.classList.add('done')}
+function qBlock(i,review){const q=S.qs[i],ok=isRight(i),show=review||S.checked[i];
+ const st=show?(ok?'Správně':'Špatně'):'Nedokončeno',cls=show?(ok?'ok':'bad'):'';
+ const bod=show?`Bodů ${pts(ok?q.pts:0)} / ${pts(q.pts)}`:`Počet bodů z ${q.pts.toFixed(1).replace('.',',')}`;
+ return `<section class="q"><div class="qh"><h2>Úloha <b>${i+1}</b></h2><span class="${cls}">${st}</span><span>${bod}</span></div>${qBody(i,show)}</section>`}
+function navPanel(){return `<aside class="nav"><h3>Navigace testu</h3><div class="grid">${S.qs.map((q,i)=>{
+  const filled=S.ans[i]!==null&&(q.type==='mc'||S.ans[i].some(x=>x));
+  const cls=S.done?(isRight(i)?'r':'w'):(i===S.cur?'cur ':'')+(filled?'done':'');
+  return `<button class="${cls}" onclick="go(${i})">${i+1}</button>`}).join('')}</div><p style="margin-top:16px">${S.done?`<a onclick="S.view='home';render()">Zpět na úvod</a>`:`<a onclick="if(confirm('Opravdu dokončit test?'))finish()">Konec testu…</a>`}</p></aside>`}
+function go(i){S.cur=i;if(S.done)document.querySelectorAll('.q')[i].scrollIntoView({behavior:'smooth'});else render()}
+function check(i){S.checked[i]=true;render()}
+
+function render(){
+ if(S.view==='home'){
+  app.innerHTML=`<div class="tabs"><a class="on">Test</a><a onclick="S.view='theory';render()">Přehled teorie</a></div>
+  <div class="info"><b>Číselné soustavy a jejich polynom<br>Převody desetinných čísel<br>Zobrazení záporných čísel (přímý kód, doplňky, posunutí)</b></div>
+  <button class="btn" onclick="newTest()">Pokus testu</button>
+  <p style="margin-top:36px">Časový limit: 15 min.</p><p>Test má 7 úloh za 6 bodů. Hodnoty se při každém pokusu generují znovu a pořadí úloh se mění. Zlomky můžete psát s čárkou i tečkou, hexadecimální číslice velkými i malými písmeny.</p>`;
+ }else if(S.view==='theory'){
+  const mcAns=[...POLYV.map(v=>[POLY+v.s,v.c]),...EXPRV.map(v=>[`Výraz ${v.e}`,CODES[v.c]])];
+  app.innerHTML=`<div class="tabs"><a onclick="S.view='home';render()">Test</a><a class="on">Přehled teorie</a></div>`+
+  mcAns.map(([q,a])=>`<div class="th"><div>${q}</div><p class="ok">✓ ${a}</p></div>`).join('')+
+  `<div class="th"><p><b>Výpočetní úlohy</b></p>
+  <p>Rozsah signed integer (n bitů): −2<sup>n−1</sup> až 2<sup>n−1</sup>−1. Rozsah s posunutím K: −K až 2<sup>n</sup>−1−K.</p>
+  <p>Soustava o základu b používá koeficienty 0 až b−1.</p>
+  <p>Zlomek do soustavy b: celá část dělením základem (zbytky odzadu), zlomek opakovaným násobením základem (celé části jsou číslice), oříznout na 2 místa.</p>
+  <p>Záporné číslo −N na 8 bitech: absolutní hodnota |N|; dvojkový doplněk 256−N; přímý kód 128+N; posunutí b−N (vše hexadecimálně na 2 číslice).</p></div>`;
+ }else if(S.view==='test'){
+  const i=S.cur;
+  app.innerHTML=`<div class="layout"><div><div style="text-align:right"><span class="timer">Zbývající čas <span id="tm">${fmt(S.left)}</span></span></div>${qBlock(i,false)}
+  <button class="btn g" onclick="check(${i})">Zkontrolovat</button>
+  <div class="foot"><span>${i>0?`<button class="btn g" onclick="go(${i-1})">Předchozí stránka</button>`:''}</span><span>${i<S.qs.length-1?`<button class="btn" onclick="go(${i+1})">Další stránka</button>`:`<button class="btn" onclick="if(confirm('Opravdu dokončit test?'))finish()">Dokončit pokus</button>`}</span></div></div>${navPanel()}</div>`;
+ }else{
+  const sc=score(),t=total(),dur=Math.round((S.end-S.start)/1000);
+  app.innerHTML=`<div class="layout"><div><table class="sum">
+  <tr><th>Stav</th><td>Dokončeno</td></tr><tr><th>Zahájení</th><td>${fmtD(S.start)}</td></tr><tr><th>Dokončeno</th><td>${fmtD(S.end)}</td></tr>
+  <tr><th>Trvání</th><td>${dur>=60?Math.floor(dur/60)+' min. '+dur%60+' sekund':dur+' sekund'}</td></tr>
+  <tr><th>Známka</th><td><b>${pts(sc)}</b> z možných ${pts(t)} (<b>${Math.round(sc/t*100)}</b>%)</td></tr></table>
+  ${S.qs.map((_,i)=>qBlock(i,true)).join('')}<div class="foot"><button class="btn" onclick="newTest()">Nový pokus</button></div></div>${navPanel()}</div>`;
+ }
+}
+render();
+</script>
+</body>
+</html>
