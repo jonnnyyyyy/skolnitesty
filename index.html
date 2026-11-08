@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procvičování – soustavy a endianita</title>
+<style>
+:root{--teal:#00a79d;--tealD:#008a82;--bg:#f5f5f5;--ink:#1d2125;--grey:#6a737b;--ok:#2e7d32;--bad:#c62828}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.5}
+a{color:var(--teal);cursor:pointer;text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--bg);padding:20px 8vw 18px}
+.crumbs{font-size:15px;color:var(--grey)}.crumbs b{color:var(--ink);font-weight:400}
+h1{margin:10px 0 0;font-size:34px;display:flex;align-items:center;gap:14px}
+h1 i{width:38px;height:38px;border:2px solid #e91e8c;border-radius:6px;display:inline-block}
+main{padding:28px 8vw 60px}
+.info{background:#f8f9fa;border-radius:8px;padding:20px;margin-bottom:26px}
+.info p{margin:.3em 0}
+.btn{background:var(--teal);color:#fff;border:0;border-radius:8px;padding:13px 28px;font-size:17px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--tealD)}.btn.g{background:#6c757d;padding:10px 22px;font-size:16px}.btn.g:hover{background:#565e64}
+.layout{display:grid;grid-template-columns:1fr 280px;gap:40px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
+.q{border-bottom:1px solid #ddd;padding:26px 0}
+.qh{display:flex;flex-wrap:wrap;gap:12px 40px;align-items:baseline;margin-bottom:22px}
+.qh h2{margin:0;font-size:28px;font-weight:500}.qh span{font-size:15px}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.qt{margin:18px 0}
+input[type=text]{border:1px solid #adb5bd;border-radius:8px;padding:12px;font-size:17px;width:150px;font-family:inherit}
+input[type=text]:disabled{background:#e9ecef}
+input.right{border-color:var(--ok)}input.wrong{border-color:var(--bad)}
+.row{margin:10px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.opt{display:block;margin:8px 0;cursor:pointer}
+.mark{font-weight:700}
+.nav h3{font-size:22px;margin:0 0 14px}
+.grid{display:flex;flex-wrap:wrap;gap:6px}
+.grid button{width:44px;height:40px;background:#fff;border:1px solid #adb5bd;font-size:15px;cursor:pointer;position:relative;font-family:inherit}
+.grid button.cur{border:2px solid #000}.grid button.done{background:#d6dde2}
+.grid button.r{border-color:var(--ok);background:#e6f4e7}.grid button.w{border-color:var(--bad);background:#fbe9e9}
+.timer{display:inline-block;border:1px solid #d32f2f;padding:8px 12px;margin-bottom:12px}
+table.sum{border-collapse:collapse;width:100%;margin-bottom:10px;max-width:760px}
+table.sum th{text-align:right;background:#eee;padding:6px 14px;width:160px}table.sum td{background:#f7f7f7;padding:6px 14px}
+table.sum tr{border-bottom:1px solid #fff}
+.fb{margin-top:10px;font-size:15px;background:#fff7e0;padding:8px 12px;border-radius:6px}
+.tabs{display:flex;gap:22px;margin-bottom:20px;border-bottom:1px solid #ddd}
+.tabs a{padding:8px 2px;color:var(--grey)}.tabs a.on{color:var(--teal);border-bottom:3px solid var(--teal)}
+.th{border-bottom:1px solid #ddd;padding:14px 0}.th p{margin:.2em 0}
+code{background:#eef2f3;padding:1px 6px;border-radius:4px}
+.foot{margin-top:30px;display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+<header>
+  <div class="crumbs">440-2104/01 (2026/2027 ZS) / Příklady k procvičení / <b>04.02</b></div>
+  <h1><i></i><span id="ttl">04.02</span></h1>
+</header>
+<main id="app"></main>
+
+<script>
+/* ---------- pomocné ---------- */
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=R(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const norm=s=>String(s).replace(/\s/g,'').replace(/^\+/,'').replace(',','.').toUpperCase().replace(/^(-?)0+(?=[0-9A-F])/,'$1');
+const cz=s=>String(s).replace('.',',');
+const sub=(n,b)=>`(${n})<sub>${b}</sub>`;
+
+/* ---------- generátory příkladů ---------- */
+const GEN={
+ oct2hex(){const n=R(512,65000);return{type:'num',html:`Převeďte číslo ${sub(n.toString(8),8)} do hexadecimální soustavy.`,fields:[{label:'Odpověď:',correct:n.toString(16).toUpperCase()}]}},
+ dec2base5(){const a=R(1,60),b=R(1,9);let int=a.toString(5),num=b,den=10,f='';
+   for(let i=0;i<2;i++){num*=5;f+=Math.floor(num/den);num%=den}
+   return{type:'num',html:`Zadané dekadické číslo převeďte do soustavy se základem 5. Výsledek zaokrouhlete na dvě pozice ve zlomkové části směrem k nule.<br><br>${a},${b}<sub>D</sub> =`,
+   fields:[{label:'',suffix:'<sub>5</sub>',correct:int+'.'+f}],tol:true}},
+ dec2bin(){const n=R(20,500);return{type:'num',html:`Převeďte dekadické číslo ${n} do binární soustavy.`,fields:[{label:'Odpověď:',correct:n.toString(2)}]}},
+ hex2bin(){const n=R(16,4095);return{type:'num',html:`Převeďte číslo ${sub(n.toString(16).toUpperCase(),16)} do binární soustavy.`,fields:[{label:'Odpověď:',correct:n.toString(2)}]}},
+ bin2dec(){const n=R(32,1023);return{type:'num',html:`Převeďte číslo ${sub(n.toString(2),2)} do dekadické soustavy.`,fields:[{label:'Odpověď:',correct:String(n)}]}},
+ dec2oct(){const n=R(64,8000);return{type:'num',html:`Převeďte dekadické číslo ${n} do osmičkové soustavy.`,fields:[{label:'Odpověď:',correct:n.toString(8)}]}},
+ shift(){const bits=[8,12,16][R(0,2)],K=R(1,2**(bits-1)),max=2**bits-1;
+   return{type:'num',html:`Pro zobrazení čísla je použito ${bits} bitů.<br>Jaký je rozsah zobrazení pro posunutí s hodnotou ${K.toLocaleString('cs')}?`,
+   fields:[{label:'Rozsah zobrazení je od',correct:String(-K)},{label:'do',correct:String(max-K)}]}},
+ twos(){const bits=[8,10,12,16][R(0,3)];return{type:'num',html:`Jaký je rozsah čísel v doplňkovém kódu na ${bits} bitech?`,
+   fields:[{label:'Od',correct:String(-(2**(bits-1)))},{label:'do',correct:String(2**(bits-1)-1)}]}}
+};
+
+/* ---------- teoretické otázky (první možnost = správná) ---------- */
+const THEORY=[
+ ['Co je bit?','Nejmenší jednotka informace, nabývá hodnot 0 nebo 1','Skupina osmi binárních číslic','Nejmenší adresovatelná jednotka paměti','Jednotka rychlosti přenosu'],
+ ['Kolik bitů má jeden byte?','8','4','16','Závisí na procesoru vždy'],
+ ['Co je to slovo (word) v architektuře počítače?','Přirozená velikost dat, se kterou procesor pracuje najednou','Vždy 16 bitů','Dva byty','Textový řetězec v paměti'],
+ ['Co znamená little endian?','Nejméně významný byte je uložen na nejnižší adrese','Nejvíce významný byte je uložen na nejnižší adrese','Bity jsou uloženy v opačném pořadí uvnitř bytu','Čísla jsou uložena jako záporná'],
+ ['Co znamená big endian?','Nejvíce významný byte je uložen na nejnižší adrese','Nejméně významný byte je uložen na nejnižší adrese','Používá se jen pro záporná čísla','Číslo je uloženo v hexadecimální soustavě'],
+ ['Jak se získá doplňkový kód záporného čísla?','Inverzí všech bitů absolutní hodnoty a přičtením 1','Jen změnou prvního bitu','Přičtením 1 k absolutní hodnotě','Posunem bitů doleva'],
+ ['Kolik binárních číslic odpovídá jedné hexadecimální číslici?','4','3','2','8'],
+ ['Kolik binárních číslic odpovídá jedné osmičkové číslici?','3','4','2','8'],
+ ['Rozsah čísel s posunutím (excess-K) na n bitech je:','od −K do 2ⁿ − 1 − K','od −2ⁿ⁻¹ do 2ⁿ⁻¹ − 1','od 0 do 2ⁿ','od −K do K']
+];
+function theoryQ([text,...opts]){const o=shuf(opts.map((t,i)=>({t,c:i===0})));
+ return{type:'mc',html:text,options:o.map(x=>x.t),correct:o.findIndex(x=>x.c),correctText:opts[0]}}
+
+/* ---------- stav ---------- */
+const S={qs:[],ans:[],checked:[],cur:0,done:false,left:900,t:null,start:null,end:null,view:'home'};
+const app=document.getElementById('app');
+
+function newTest(){
+ const nums=shuf(Object.keys(GEN)).slice(0,6).map(k=>GEN[k]());
+ const th=shuf(THEORY).slice(0,4).map(theoryQ);
+ S.qs=shuf([...nums,...th]);S.ans=S.qs.map(q=>q.type==='mc'?null:q.fields.map(()=>''));
+ S.checked=S.qs.map(()=>false);S.cur=0;S.done=false;S.left=900;S.start=new Date();
+ clearInterval(S.t);S.t=setInterval(()=>{S.left--;if(S.left<=0)finish();else{const t=document.getElementById('tm');if(t)t.textContent=fmt(S.left)}},1000);
+ S.view='test';render();
+}
+function finish(){clearInterval(S.t);S.done=true;S.end=new Date();S.view='review';render()}
+const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+const fmtD=d=>d.toLocaleString('cs',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+
+function isRight(i){const q=S.qs[i],a=S.ans[i];if(q.type==='mc')return a===q.correct;
+ return q.fields.every((f,k)=>norm(a[k])===norm(f.correct)||(q.tol&&norm(a[k]).replace('.','')===norm(f.correct).replace('.','')&&false))}
+const score=()=>S.qs.reduce((s,_,i)=>s+(isRight(i)?1:0),0);
+
+/* ---------- vykreslení otázky ---------- */
+function qBody(i,locked){
+ const q=S.qs[i],a=S.ans[i],show=locked;let h=`<div class="qt">${q.html}</div>`;
+ if(q.type==='mc'){
+  h+=q.options.map((o,k)=>`<label class="opt"><input type="radio" name="q${i}" ${a===k?'checked':''} ${locked?'disabled':''} onchange="setMC(${i},${k})"> ${o}${show&&k===q.correct?' <span class="ok mark">✓</span>':''}${show&&a===k&&k!==q.correct?' <span class="bad mark">✗</span>':''}</label>`).join('');
+  if(show&&!isRight(i))h+=`<div class="fb">Správná odpověď: <b>${q.options[q.correct]}</b></div>`;
+ }else{
+  q.fields.forEach((f,k)=>{const r=show&&norm(a[k])===norm(f.correct);
+   h+=`<div class="row">${f.label?`<span>${f.label}</span>`:''}<input type="text" autocomplete="off" value="${a[k].replace(/"/g,'&quot;')}" ${locked?'disabled':''} class="${show?(r?'right':'wrong'):''}" oninput="setNum(${i},${k},this.value)">${f.suffix||''}${show?`<span class="${r?'ok':'bad'} mark">${r?'✓':'✗'}</span>`:''}</div>`});
+  if(show&&!isRight(i))h+=`<div class="fb">Správná odpověď: <b>${q.fields.map(f=>cz(f.correct)).join(' … ')}</b></div>`;
+ }
+ return h;
+}
+function qBlock(i,locked){const ok=isRight(i);
+ return `<section class="q"><div class="qh"><h2>Úloha ${i+1}</h2><span class="${locked?(ok?'ok':'bad'):''}">${locked?(ok?'Správně':'Špatně'):(S.checked[i]?(ok?'Správně':'Špatně'):'Nedokončeno')}</span><span>Bodů ${locked||S.checked[i]?(ok?'1,00':'0,00'):''} z 1,0</span></div>${qBody(i,locked||S.checked[i])}</section>`}
+function setMC(i,k){S.ans[i]=k}
+function setNum(i,k,v){S.ans[i][k]=v;const b=document.querySelectorAll('.grid button')[i];if(b)b.classList.add('done')}
+
+/* ---------- obrazovky ---------- */
+function navPanel(){return `<aside class="nav"><h3>Navigace testu</h3><div class="grid">${S.qs.map((q,i)=>{
+  const cls=S.done?(isRight(i)?'r':'w'):(i===S.cur?'cur ':'')+(S.ans[i]&&(q.type==='mc'?S.ans[i]!==null:S.ans[i].some(x=>x))?'done':'');
+  return `<button class="${cls}" onclick="go(${i})">${i+1}</button>`}).join('')}</div><p style="margin-top:16px">${S.done?`<a onclick="S.view='home';render()">Zpět na úvod</a>`:`<a onclick="if(confirm('Opravdu dokončit test?'))finish()">Konec testu…</a>`}</p></aside>`}
+function go(i){S.cur=i;if(S.done)document.querySelectorAll('.q')[i].scrollIntoView({behavior:'smooth'});else render()}
+function check(i){S.checked[i]=true;render()}
+
+function render(){
+ document.getElementById('ttl').textContent='04.02';
+ if(S.view==='home'){
+  app.innerHTML=`<div class="tabs"><a class="on">Test</a><a onclick="S.view='theory';render()">Přehled teorie</a></div>
+  <div class="info"><b>Převody desetinných čísel<br>Převody čísel mezi binární, oktální a hexadecimální soustavou<br>Endianita</b><p style="margin-top:14px">Než začnete tento test s výše uvedenými okruhy, připomeňte si pojmy <a>bit</a>, <a>byte</a>, <a>slovo</a>.</p></div>
+  <button class="btn" onclick="newTest()">Pokus testu</button>
+  <p style="margin-top:36px">Časový limit: 15 min.</p><p>Hodnoty v zadání se při každém pokusu generují znovu. Zlomky zadávejte s čárkou nebo tečkou, hexadecimální písmena velká i malá.</p>`;
+ }else if(S.view==='theory'){
+  app.innerHTML=`<div class="tabs"><a onclick="S.view='home';render()">Test</a><a class="on">Přehled teorie</a></div>`+THEORY.map(([q,a])=>`<div class="th"><p><b>${q}</b></p><p class="ok">✓ ${a}</p></div>`).join('')+
+  `<div class="th"><p><b>Postupy pro výpočetní úlohy</b></p><p>Celá část: opakované dělení základem, zbytky čtené odzadu. Zlomek: opakované násobení základem, celé části jsou číslice. Pro oktální ↔ hexadecimální převod jděte přes binární soustavu (3 resp. 4 bity na číslici). Posunutí K na n bitech: rozsah od −K do 2<sup>n</sup>−1−K.</p></div>`;
+ }else if(S.view==='test'){
+  const i=S.cur;
+  app.innerHTML=`<div class="layout"><div><div style="text-align:right"><span class="timer">Zbývající čas <span id="tm">${fmt(S.left)}</span></span></div>${qBlock(i,false)}
+  <button class="btn g" onclick="check(${i})">Zkontrolovat</button>
+  <div class="foot"><span>${i>0?`<button class="btn g" onclick="go(${i-1})">Předchozí stránka</button>`:''}</span><span>${i<S.qs.length-1?`<button class="btn" onclick="go(${i+1})">Další stránka</button>`:`<button class="btn" onclick="if(confirm('Opravdu dokončit test?'))finish()">Dokončit pokus</button>`}</span></div></div>${navPanel()}</div>`;
+ }else{
+  const sc=score(),n=S.qs.length,dur=Math.round((S.end-S.start)/1000);
+  app.innerHTML=`<div class="layout"><div><table class="sum">
+  <tr><th>Stav</th><td>Dokončeno</td></tr><tr><th>Zahájení</th><td>${fmtD(S.start)}</td></tr><tr><th>Dokončeno</th><td>${fmtD(S.end)}</td></tr>
+  <tr><th>Trvání</th><td>${dur>=60?Math.floor(dur/60)+' min '+dur%60+' s':dur+' sekund'}</td></tr>
+  <tr><th>Známka</th><td><b>${sc},0</b> z možných ${n},0 (<b>${Math.round(sc/n*100)}%</b>)</td></tr></table>
+  ${S.qs.map((_,i)=>qBlock(i,true)).join('')}<div class="foot"><button class="btn" onclick="newTest()">Nový pokus</button></div></div>${navPanel()}</div>`;
+ }
+}
+render();
+</script>
+</body>
+</html>
