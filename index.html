@@ -38,10 +38,11 @@ main{padding:28px 8vw 60px}
 const PREDMETY={
   zds:{nazev:'ZDS',kod:'440-2104/01 (2026/2027 ZS)'},
   fyzika:{nazev:'Fyzika',popis:''},
+  toi:{nazev:'TOI',popis:''},
   matematika:{nazev:'Matematika',popis:''},
 };
 /* Záložní seznam testů – použije se, když nejde načíst GitHub API (např. lokálně). */
-const ZALOZNI={zds:['test2.html','test-kodovani.html'],fyzika:[],matematika:[]};
+const ZALOZNI={zds:['test2.html','test-kodovani.html'],fyzika:['procvicovani-k-zapoctu.html'],toi:[],matematika:[]};
 
 function repo(){
   const h=location.hostname;

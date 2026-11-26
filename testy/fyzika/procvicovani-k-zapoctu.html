@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Všech 56 vzorových příkladů k zápočtové písemce s řešením, kontrolou výsledků, náhodným testem a přehledem teorie.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procvičování k zápočtu – procvičování</title>
+<style>
+:root{--teal:#00a79d;--tealD:#008a82;--bg:#f5f5f5;--ink:#1d2125;--grey:#6a737b;--ok:#2e7d32;--bad:#c62828}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.55}
+a{color:var(--teal);cursor:pointer;text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--bg);padding:20px 8vw 18px}
+.crumbs{font-size:15px;color:var(--grey)}.crumbs b{color:var(--ink);font-weight:400}
+h1{margin:10px 0 0;font-size:34px;display:flex;align-items:center;gap:14px}
+h1 i{width:38px;height:38px;border:2px solid #e91e8c;border-radius:6px;display:inline-block}
+main{padding:28px 8vw 60px}
+.info{background:#f8f9fa;border-radius:8px;padding:20px;margin-bottom:26px}
+.btn{background:var(--teal);color:#fff;border:0;border-radius:8px;padding:13px 28px;font-size:17px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--tealD)}.btn.g{background:#6c757d;padding:10px 22px;font-size:16px}.btn.g:hover{background:#565e64}
+.btn.o{background:#fff;color:var(--tealD);border:1px solid var(--teal);padding:8px 15px;font-size:15px;font-weight:500;margin:4px 6px 4px 0}
+.btn.o:hover{background:#e6f6f5}.btn.o.on{background:var(--teal);color:#fff}
+.layout{display:grid;grid-template-columns:1fr 280px;gap:40px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}}
+.q{border-bottom:1px solid #ddd;padding:26px 0}
+.qh{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:baseline;margin-bottom:14px}
+.qh h2{margin:0;font-size:26px;font-weight:500}.qh span{font-size:15px}
+.tag{background:#eef1f3;color:var(--grey);border-radius:20px;padding:2px 12px;font-size:13px!important}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.qt{margin:12px 0}.qt.after{margin:12px 0 0}
+.hint{font-size:14px;color:var(--grey);margin:10px 0 6px;font-style:italic}
+input[type=text]{border:1px solid #adb5bd;border-radius:8px;padding:9px 10px;font-size:17px;width:130px;font-family:inherit}
+input[type=text]:disabled,select:disabled{background:#e9ecef}
+select{border:1px solid #adb5bd;border-radius:8px;padding:9px 10px;font-size:16px;font-family:inherit;max-width:100%}
+input.right,select.right{border-color:var(--ok);background:#f3faf3}input.wrong,select.wrong{border-color:var(--bad);background:#fdf3f3}
+.row{margin:8px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.row .l{min-width:150px}
+.mark{font-weight:700}
+.nav h3{font-size:22px;margin:0 0 14px}
+.grid{display:flex;flex-wrap:wrap;gap:6px}
+.grid button{width:44px;height:40px;background:#fff;border:1px solid #adb5bd;font-size:15px;cursor:pointer;font-family:inherit}
+.grid button.cur{border:2px solid #000}.grid button.done{background:#d6dde2}
+.grid button.r{border-color:var(--ok);background:#e6f4e7}.grid button.w{border-color:var(--bad);background:#fbe9e9}
+.grid button.h{border-color:#e0a800;background:#fff7e0}
+.timer{display:inline-block;border:1px solid #d32f2f;padding:8px 12px;margin-bottom:12px}
+table.sum{border-collapse:collapse;width:100%;margin-bottom:10px}
+table.sum th{text-align:right;color:var(--teal);padding:6px 14px;width:140px;font-weight:600}
+table.sum td{padding:6px 14px}table.sum tr{border-top:1px solid #ddd}table.sum tr:last-child{border-bottom:1px solid #ddd}
+.fb{margin-top:10px;font-size:15px;background:#fff7e0;padding:8px 12px;border-radius:6px}
+.tabs{display:flex;gap:22px;margin-bottom:20px;border-bottom:1px solid #ddd;flex-wrap:wrap}
+.tabs a{padding:8px 2px;color:var(--grey)}.tabs a.on{color:var(--teal);border-bottom:3px solid var(--teal)}
+.foot{margin-top:30px;display:flex;justify-content:space-between;gap:10px}
+.sol{margin-top:14px;background:#eef8f7;border-left:4px solid var(--teal);border-radius:6px;padding:12px 18px}
+.sol p{margin:.45em 0}.sol ol,.sol ul{margin:6px 0;padding-left:22px}.sol li{margin:4px 0}
+.res{margin-top:8px;padding-top:8px;border-top:1px dashed #9fd3cf}
+.f{font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-size:1.08em}
+.box{display:inline-block;background:#fff;border:1px solid #9fd3cf;border-radius:6px;padding:2px 10px;margin:2px 0}
+.th{border-bottom:1px solid #ddd;padding:18px 0}.th h3{margin:0 0 8px;font-size:22px}.th h4{margin:14px 0 4px;font-size:17px}.th p{margin:.4em 0}
+.th .ex{background:#eef8f7;border-left:4px solid var(--teal);border-radius:6px;padding:10px 16px;margin:10px 0}
+table.t{border-collapse:collapse;margin:8px 0;font-size:15px}
+table.t td,table.t th{border:1px solid #ccc;padding:5px 12px;text-align:left}table.t th{background:#f1f3f5;font-weight:600}
+.figs{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0}
+.figs figure{margin:0;text-align:center;font-size:13px;color:var(--grey)}
+svg.plot{background:#fff;border:1px solid #e3e7ea;border-radius:6px;max-width:100%;height:auto}
+svg text{font-family:"Segoe UI",Arial,sans-serif}
+.filters{margin:0 0 6px}
+.cnt{color:var(--grey);font-size:14px;margin:6px 0 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="crumbs"><a href="../../index.html?p=fyzika">← Výběr testu</a> &nbsp;|&nbsp; Fyzika / Příklady k procvičení / <b>Procvičování k zápočtu</b></div>
+  <h1><i></i>Procvičování k zápočtu</h1>
+</header>
+<main id="app"></main>
+
+<script>
+/* =================== pomocné funkce =================== */
+const g=9.81, PI=Math.PI;
+const Ri=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const Rd=(a,b,s)=>Math.round((Ri(Math.round(a/s),Math.round(b/s))*s)*1000)/1000;
+const pick=a=>a[Ri(0,a.length-1)];
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Ri(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const rad=d=>d*PI/180;
+/* číslo česky */
+function N(x,d){if(!isFinite(x))return '—';if(Math.abs(x)<1e-10)x=0;
+ if(d===undefined){const a=Math.abs(x);d=a>=1000?1:a>=100?2:a>=1?3:4}
+ const s=x.toLocaleString('cs',{maximumFractionDigits:d,useGrouping:Math.abs(x)>=10000});
+ return s.replace('-','−')}
+const V=a=>'('+a.map(x=>N(x)).join('; ')+')';
+const len=a=>Math.sqrt(a.reduce((s,x)=>s+x*x,0));
+const T1='<i>t</i>',T2='<i>t</i><sup>2</sup>',T3='<i>t</i><sup>3</sup>';
+/* polynom: [[koef, proměnná],...] */
+function poly(tt){let s='';tt.forEach(([c,v],i)=>{if(!c)return;const neg=c<0,a=Math.abs(c);
+ const cs=(a===1&&v)?'':N(a);s+=(s?(neg?' − ':' + '):(neg?'−':''))+cs+v});return s||'0'}
+const vec3=(a,b,c)=>poly([[a,'<b><i>i</i></b>']])+(b?(b<0?' − ':' + ')+poly([[Math.abs(b),'<b><i>j</i></b>']]):'')+(c?(c<0?' − ':' + ')+poly([[Math.abs(c),'<b><i>k</i></b>']]):'');
+const kmh=v=>v/3.6;
+
+/* =================== grafy (SVG) =================== */
+const S=(f,a,b,n=140)=>Array.from({length:n+1},(_,i)=>{const t=a+(b-a)*i/n;return[t,f(t)]});
+const COL=['#008a82','#c2185b','#3b5bdb'];
+function plot(o){
+ const W=o.w||300,H=o.h||170,m={l:34,r:22,t:16,b:22};
+ const xs=[],ys=[];o.s.forEach(s=>s.forEach(([x,y])=>{xs.push(x);ys.push(y)}));(o.marks||[]).forEach(([x,y])=>{xs.push(x);ys.push(y)});
+ let x0=Math.min(0,...xs),x1=Math.max(0,...xs),y0=Math.min(0,...ys),y1=Math.max(0,...ys);
+ if(x1-x0<1e-9)x1=x0+1;if(y1-y0<1e-9){y1+=1;y0-=(y0<0?1:0)}
+ const dy=(y1-y0)*.1;y1+=dy;if(y0<0)y0-=dy;
+ const X=x=>m.l+(x-x0)/(x1-x0)*(W-m.l-m.r),Y=y=>H-m.b-(y-y0)/(y1-y0)*(H-m.t-m.b);
+ const ax=`<line x1="${X(x0)}" y1="${Y(0)}" x2="${X(x1)+12}" y2="${Y(0)}" stroke="#555" marker-end="url(#ar)"/><line x1="${X(0)}" y1="${Y(y0)}" x2="${X(0)}" y2="${Y(y1)-8}" stroke="#555" marker-end="url(#ar)"/>`;
+ const lb=`<text x="${X(x1)+8}" y="${Y(0)+15}" font-size="12" text-anchor="end" fill="#333">${o.xl||'t'}</text><text x="${X(0)+6}" y="${m.t-3}" font-size="12" fill="#333">${o.yl||''}</text>`;
+ const ps=o.s.map((s,i)=>`<path d="M${s.map(([x,y])=>X(x).toFixed(1)+' '+Y(y).toFixed(1)).join('L')}" fill="none" stroke="${COL[i%3]}" stroke-width="2"/>`).join('');
+ const mk=(o.marks||[]).map(([x,y,t,pos])=>`<line x1="${X(x)}" y1="${Y(y)}" x2="${X(x)}" y2="${Y(0)}" stroke="#aaa" stroke-dasharray="3 3"/><circle cx="${X(x)}" cy="${Y(y)}" r="3.5" fill="#c2185b"/>${t?`<text x="${X(x)+(pos==='l'?-5:5)}" y="${Y(y)+(y<0?14:-6)}" font-size="11" fill="#c2185b" text-anchor="${pos==='l'?'end':'start'}">${t}</text>`:''}`).join('');
+ return `<svg class="plot" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#555"/></marker></defs>${ax}${ps}${mk}${lb}</svg>`;
+}
+const fig=(svg,c)=>`<figure>${svg}<figcaption>${c||''}</figcaption></figure>`;
+const figs=a=>`<div class="figs">${a.join('')}</div>`;
+
+/* =================== typy pohybu =================== */
+const TYPY=['rovnoměrný přímočarý','rovnoměrně zrychlený','rovnoměrně zpomalený','nerovnoměrně zrychlený (zrychlení se mění s časem)'];
+
+/* =================== příklady =================== */
+const TOP={kin:'Přímočarý pohyb',vec:'Pohyb v rovině a prostoru',kruh:'Pohyb po kružnici',dyn:'Dynamika',vrh:'Pád a vrhy',en:'Práce, energie, hybnost',rot:'Rotace tuhého tělesa'};
+const PR=[];const def=o=>PR.push(o);
+const res=a=>`<div class="res">Výsledek: ${a.map(f=>f.sel?`<span class="box">${f.sel[f.v]}</span>`:`<span class="box">${f.l} ${N(f.v)} ${f.u||''}</span>`).join(' ')}</div>`;
+
+/* ---------- 1 ---------- */
+def({n:1,t:'kin',text:()=>`Napište vztahy pro rovnoměrný přímočarý, rovnoměrně zrychlený a zpomalený pohyb (poloha, rychlost, zrychlení). Načrtněte příslušné grafy tak, aby odpovídaly napsaným vztahům.`,
+theory:()=>`<p><b>Rovnoměrný přímočarý:</b> <span class="f">a = 0, &nbsp; v = v<sub>0</sub> = konst., &nbsp; x(t) = x<sub>0</sub> + v<sub>0</sub>t</span></p>
+<p><b>Rovnoměrně zrychlený:</b> <span class="f">a = konst. &gt; 0, &nbsp; v(t) = v<sub>0</sub> + at, &nbsp; x(t) = x<sub>0</sub> + v<sub>0</sub>t + ½at²</span></p>
+<p><b>Rovnoměrně zpomalený:</b> <span class="f">a = konst. (zpomalení), &nbsp; v(t) = v<sub>0</sub> − at, &nbsp; x(t) = x<sub>0</sub> + v<sub>0</sub>t − ½at²</span> (platí do zastavení v čase <span class="f">t = v<sub>0</sub>/a</span>)</p>
+<p>Grafy: x(t) – přímka / parabola; v(t) – vodorovná / rostoucí / klesající přímka; a(t) – nula / kladná konstanta / záporná konstanta.</p>
+${['Rovnoměrný','Rovnoměrně zrychlený','Rovnoměrně zpomalený'].map((nm,k)=>{const v0=[2,1,4][k],a=[0,1,-1][k],x0=1,te=k===2?4:4;
+ return `<p style="margin-top:12px"><b>${nm}</b></p>`+figs([fig(plot({s:[S(t=>x0+v0*t+a*t*t/2,0,te)],yl:'x',w:210,h:140}),'x(t)'),fig(plot({s:[S(t=>v0+a*t,0,te)],yl:'v',w:210,h:140}),'v(t)'),fig(plot({s:[S(t=>a,0,te,2)],yl:'a',w:210,h:140}),'a(t)')])}).join('')}`});
+
+/* ---------- 2 ---------- */
+def({n:2,t:'vrh',text:()=>`Napište vztahy pro volný pád a vrh svislý vzhůru (dráha, rychlost, zrychlení). Napište, jak se pro oba případy spočítá kinetická a potenciální energie v libovolném čase. Napište zákon zachování energie.`,
+theory:()=>`<p><b>Volný pád</b> (z výšky h<sub>0</sub>, z klidu): <span class="f">a = g, &nbsp; v(t) = gt, &nbsp; s(t) = ½gt², &nbsp; výška h(t) = h<sub>0</sub> − ½gt²</span></p>
+<p class="f">E<sub>k</sub>(t) = ½m(gt)², &nbsp; E<sub>p</sub>(t) = mg·h(t) = mg(h<sub>0</sub> − ½gt²)</p>
+<p><b>Vrh svislý vzhůru</b> (počáteční rychlost v<sub>0</sub>): <span class="f">a = −g, &nbsp; v(t) = v<sub>0</sub> − gt, &nbsp; h(t) = v<sub>0</sub>t − ½gt²</span>; max. výška <span class="f">H = v<sub>0</sub>²/(2g)</span> v čase <span class="f">t = v<sub>0</sub>/g</span>.</p>
+<p class="f">E<sub>k</sub>(t) = ½m(v<sub>0</sub> − gt)², &nbsp; E<sub>p</sub>(t) = mg(v<sub>0</sub>t − ½gt²)</p>
+<p><b>Zákon zachování mechanické energie:</b> v izolované soustavě, kde působí jen konzervativní síly, je součet kinetické a potenciální energie konstantní: <span class="f">E = E<sub>k</sub> + E<sub>p</sub> = konst.</span> (pro pád: <span class="f">½mv² + mgh = mgh<sub>0</sub></span>).</p>`});
+
+/* ---------- 3 ---------- */
+def({n:3,t:'kin',p:{b:4,c:1,T:2},rnd:()=>({b:Ri(2,9),c:Ri(1,3),T:Ri(1,4)}),
+text:p=>`Pohyb hmotného bodu je dán rovnicí <span class="f">x(t) = ${poly([[p.b,T1],[-p.c,T2]])}</span>. Načrtněte graf x(t) včetně význačných bodů pohybu. Určete polohu, rychlost a zrychlení v čase ${p.T} s.`,
+ans:p=>[{l:'x =',v:p.b*p.T-p.c*p.T**2,u:'m'},{l:'v =',v:p.b-2*p.c*p.T,u:'m/s'},{l:'a =',v:-2*p.c,u:'m/s²'}],
+sol:p=>{const t1=p.b/(2*p.c),t2=p.b/p.c;return `<p>Rychlost a zrychlení získáme derivací polohy podle času:</p>
+<p class="f">v(t) = dx/dt = ${poly([[p.b,''],[-2*p.c,T1]])}, &nbsp; a(t) = dv/dt = ${N(-2*p.c)} m/s²</p>
+<p>V čase t = ${p.T} s: <span class="f">x = ${N(p.b*p.T-p.c*p.T**2)} m, v = ${N(p.b-2*p.c*p.T)} m/s, a = ${N(-2*p.c)} m/s²</span></p>
+<p><b>Význačné body:</b> start v počátku x = 0 (t = 0); bod obratu v = 0 v čase t = ${N(t1)} s, kde x<sub>max</sub> = ${N(p.b*t1-p.c*t1*t1)} m; návrat do počátku x = 0 v čase t = ${N(t2)} s. Jde o rovnoměrně zpomalený pohyb, po bodu obratu se bod vrací.</p>
+${figs([fig(plot({s:[S(t=>p.b*t-p.c*t*t,0,t2*1.15)],yl:'x [m]',xl:'t [s]',marks:[[t1,p.b*t1-p.c*t1*t1,'max '+N(p.b*t1-p.c*t1*t1)+' m'],[t2,0,'t = '+N(t2)+' s']],w:320,h:180}),'x(t) – parabola')])}`}});
+
+/* ---------- 4 ---------- */
+def({n:4,t:'kin',p:{k:3,T:2},rnd:()=>({k:Ri(2,5),T:Ri(1,4)}),
+text:p=>`Pohyb hmotného bodu je dán rovnicí <span class="f">x(t) = A sin(${p.k}t)</span>, kde A je hodnota v metrech. Načrtněte graf a význačné body pohybu. Určete polohu, rychlost a zrychlení v čase ${p.T} s.`,
+hint:'Výsledky zadávejte jako násobky A (např. pro x = −0,279·A napište −0,279). Úhel je v radiánech.',
+ans:p=>{const w=p.k,s=Math.sin(w*p.T),c=Math.cos(w*p.T);return[{l:'x =',v:s,u:'· A m'},{l:'v =',v:w*c,u:'· A m/s'},{l:'a =',v:-w*w*s,u:'· A m/s²'}]},
+sol:p=>{const w=p.k,s=Math.sin(w*p.T),c=Math.cos(w*p.T),Tp=2*PI/w;return `<p>Harmonický kmit s úhlovou frekvencí ω = ${w} rad/s, periodou <span class="f">T = 2π/ω = ${N(Tp)} s</span>, amplitudou A.</p>
+<p class="f">v(t) = dx/dt = ${w}A cos(${w}t), &nbsp; a(t) = dv/dt = −${w*w}A sin(${w}t) = −${w*w}·x(t)</p>
+<p>V čase ${p.T} s (argument ${w*p.T} rad): sin(${w*p.T}) = ${N(s,4)}, cos(${w*p.T}) = ${N(c,4)}</p>
+<p class="f">x = ${N(s,4)}·A m, &nbsp; v = ${N(w*c,4)}·A m/s, &nbsp; a = ${N(-w*w*s,4)}·A m/s²</p>
+<p><b>Význačné body:</b> průchody rovnovážnou polohou x = 0 v časech t = nπ/${w} (tj. 0; ${N(PI/w)}; ${N(2*PI/w)} s…), zde je rychlost maximální (±${w}A); krajní polohy x = ±A v časech t = π/${2*w} + nπ/${w} (${N(PI/(2*w))}; ${N(3*PI/(2*w))} s…), zde je v = 0 a zrychlení maximální (∓${w*w}A).</p>
+${figs([fig(plot({s:[S(t=>Math.sin(w*t),0,2*Tp,200)],yl:'x/A',xl:'t [s]',marks:[[PI/(2*w),1,'A'],[3*PI/(2*w),-1,'−A'],[Tp,0,'T = '+N(Tp)+' s']],w:340,h:170}),'x(t) – sinusoida (2 periody)')])}`}});
+
+/* ---------- 5 ---------- */
+def({n:5,t:'vec',p:{a:4,c:8,T:2},rnd:()=>({a:Ri(2,7),c:Ri(4,10),T:Ri(1,3)}),
+text:p=>`Pohyb hmotného bodu je dán rovnicemi <span class="f">x(t) = ${poly([[p.a,T1],[-1,T3]])}, &nbsp; y(t) = ${poly([[p.c,''],[-1,T2]])}</span>. Najděte trajektorii pohybu (tj. závislost x na y). Určete polohový vektor, vektor rychlosti a zrychlení v čase ${p.T} s.`,
+hint:'Složky vektorů zadávejte zvlášť.',
+ans:p=>{const t=p.T;return[{l:'r<sub>x</sub> =',v:p.a*t-t**3,u:'m'},{l:'r<sub>y</sub> =',v:p.c-t*t,u:'m'},{l:'v<sub>x</sub> =',v:p.a-3*t*t,u:'m/s'},{l:'v<sub>y</sub> =',v:-2*t,u:'m/s'},{l:'a<sub>x</sub> =',v:-6*t,u:'m/s²'},{l:'a<sub>y</sub> =',v:-2,u:'m/s²'}]},
+sol:p=>{const t=p.T,r=[p.a*t-t**3,p.c-t*t],v=[p.a-3*t*t,-2*t],a=[-6*t,-2];return `<p><b>Trajektorie:</b> z druhé rovnice <span class="f">t² = ${p.c} − y</span>, tedy <span class="f">t = √(${p.c} − y)</span> (pro t ≥ 0). Dosadíme do x:</p>
+<p class="f">x = ${p.a}√(${p.c} − y) − (${p.c} − y)<sup>3/2</sup> = √(${p.c} − y) · (y ${p.a-p.c<0?'− '+(p.c-p.a):'+ '+(p.a-p.c)})</p>
+<p><b>Derivace:</b> <span class="f">v<sub>x</sub> = ${poly([[p.a,''],[-3,T2]])}, v<sub>y</sub> = −2t; &nbsp; a<sub>x</sub> = −6t, a<sub>y</sub> = −2</span></p>
+<p>V čase ${t} s: <span class="f">r⃗ = ${V(r)} m, v⃗ = ${V(v)} m/s, a⃗ = ${V(a)} m/s²</span></p>
+${figs([fig(plot({s:[Array.from({length:121},(_,i)=>{const s=i/120*(t+1);return[p.a*s-s**3,p.c-s*s]})],xl:'x',yl:'y',marks:[[r[0],r[1],'t = '+t+' s']],w:320,h:200}),'trajektorie y(x), t ≥ 0')])}`}});
+
+/* ---------- 6 ---------- */
+def({n:6,t:'vec',p:{a:4,c:8,e:2,T:2},rnd:()=>({a:Ri(2,7),c:Ri(4,10),e:Ri(1,5),T:Ri(1,3)}),
+text:p=>`Poloha hmotného bodu je dána rovnicemi <span class="f">x(t) = ${poly([[p.a,T1],[-1,T3]])}, y(t) = ${poly([[p.c,''],[-1,T2]])}, z(t) = ${poly([[p.e,T1]])}</span>. Napište polohový vektor, vektor rychlosti a zrychlení v čase ${p.T} s. Určete navíc i velikost rychlosti v čase ${p.T} s.`,
+ans:p=>{const t=p.T;return[{l:'r<sub>x</sub> =',v:p.a*t-t**3,u:'m'},{l:'r<sub>y</sub> =',v:p.c-t*t,u:'m'},{l:'r<sub>z</sub> =',v:p.e*t,u:'m'},{l:'v<sub>x</sub> =',v:p.a-3*t*t,u:'m/s'},{l:'v<sub>y</sub> =',v:-2*t,u:'m/s'},{l:'v<sub>z</sub> =',v:p.e,u:'m/s'},{l:'a<sub>x</sub> =',v:-6*t,u:'m/s²'},{l:'a<sub>y</sub> =',v:-2,u:'m/s²'},{l:'a<sub>z</sub> =',v:0,u:'m/s²'},{l:'|v| =',v:len([p.a-3*t*t,-2*t,p.e]),u:'m/s'}]},
+sol:p=>{const t=p.T,v=[p.a-3*t*t,-2*t,p.e];return `<p class="f">r⃗(t) = (${poly([[p.a,T1],[-1,T3]])}; ${poly([[p.c,''],[-1,T2]])}; ${poly([[p.e,T1]])})</p>
+<p class="f">v⃗(t) = dr⃗/dt = (${poly([[p.a,''],[-3,T2]])}; −2t; ${p.e}), &nbsp; a⃗(t) = dv⃗/dt = (−6t; −2; 0)</p>
+<p>V čase ${t} s: <span class="f">r⃗ = ${V([p.a*t-t**3,p.c-t*t,p.e*t])} m, v⃗ = ${V(v)} m/s, a⃗ = ${V([-6*t,-2,0])} m/s²</span></p>
+<p>Velikost rychlosti: <span class="f">|v| = √(v<sub>x</sub>² + v<sub>y</sub>² + v<sub>z</sub>²) = √(${v.map(x=>N(x*x)).join(' + ')}) = ${N(len(v))} m/s</span></p>`}});
+
+/* ---------- 7 ---------- */
+def({n:7,t:'kin',p:{a:3,b:5,c:4,T:2},rnd:()=>({a:Ri(1,6),b:Ri(1,8),c:Ri(1,10),T:Ri(1,4)}),
+text:p=>`Těleso se pohybovalo tak, že jeho rychlost v čase t byla <span class="f">v(t) = ${poly([[p.a,T2],[p.b,T1],[p.c,'']])}</span>. Určete dráhu a zrychlení ve ${p.T}. sekundě za předpokladu, že dráha v čase t = 0 s je 0 m. Určete počáteční rychlost pohybu.`,
+hint:'Dráhu i zrychlení počítejte v okamžiku t = '+'T s (dráha uražená od t = 0).',
+ans:p=>[{l:'s =',v:p.a/3*p.T**3+p.b/2*p.T**2+p.c*p.T,u:'m'},{l:'a =',v:2*p.a*p.T+p.b,u:'m/s²'},{l:'v<sub>0</sub> =',v:p.c,u:'m/s'}],
+sol:p=>{const s=p.a/3*p.T**3+p.b/2*p.T**2+p.c*p.T;return `<p>Dráhu získáme integrací rychlosti (konstanta je 0, protože s(0) = 0):</p>
+<p class="f">s(t) = ∫v dt = ${poly([[p.a/3,T3],[p.b/2,T2],[p.c,T1]])}</p>
+<p>Zrychlení je derivace rychlosti: <span class="f">a(t) = dv/dt = ${poly([[2*p.a,T1],[p.b,'']])}</span></p>
+<p>V čase ${p.T} s: <span class="f">s = ${N(s)} m, a = ${N(2*p.a*p.T+p.b)} m/s²</span>. Počáteční rychlost <span class="f">v<sub>0</sub> = v(0) = ${p.c} m/s</span>.</p>
+<p class="hint">Pozn.: kdyby se „ve ${p.T}. sekundě“ chápalo jako dráha uražená během ${p.T}. sekundy (od ${p.T-1} do ${p.T} s), byla by s(${p.T}) − s(${p.T-1}) = ${N(s-(p.a/3*(p.T-1)**3+p.b/2*(p.T-1)**2+p.c*(p.T-1)))} m.</p>`}});
+
+/* ---------- 8, 9 ---------- */
+const r3=p=>`<span class="f">r⃗(t) = ${vec3(p.a,0,0).replace('<b><i>i</i></b>','t<sup>3</sup><b><i>i</i></b>')} − ${p.b}t<sup>2</sup><b><i>j</i></b> + ${p.c}<b><i>k</i></b></span>`;
+def({n:8,t:'vec',p:{a:4,b:5,c:10,T:3},rnd:()=>({a:Ri(1,6),b:Ri(1,8),c:Ri(2,15),T:Ri(1,4)}),
+text:p=>`Poloha hmotného bodu je dána polohovým vektorem ${r3(p)} (koeficienty v příslušných jednotkách). Určete vektor rychlosti v ${p.T} s a velikost rychlosti v témže čase.`,
+ans:p=>{const v=[3*p.a*p.T**2,-2*p.b*p.T,0];return[{l:'v<sub>x</sub> =',v:v[0],u:'m/s'},{l:'v<sub>y</sub> =',v:v[1],u:'m/s'},{l:'v<sub>z</sub> =',v:0,u:'m/s'},{l:'|v| =',v:len(v),u:'m/s'}]},
+sol:p=>{const v=[3*p.a*p.T**2,-2*p.b*p.T,0];return `<p class="f">v⃗(t) = dr⃗/dt = ${3*p.a}t²<b><i>i</i></b> − ${2*p.b}t<b><i>j</i></b> + 0<b><i>k</i></b> &nbsp; (konstanta ${p.c}<b><i>k</i></b> se derivací ztratí)</p>
+<p>V čase ${p.T} s: <span class="f">v⃗ = ${V(v)} m/s</span></p><p class="f">|v| = √(${N(v[0])}² + ${N(Math.abs(v[1]))}²) = ${N(len(v))} m/s</p>`}});
+def({n:9,t:'vec',p:{a:4,b:5,c:10,T:3},rnd:()=>({a:Ri(1,6),b:Ri(1,8),c:Ri(2,15),T:Ri(1,4)}),
+text:p=>`Poloha hmotného bodu je dána polohovým vektorem ${r3(p)} (koeficienty v příslušných jednotkách). Určete vektor zrychlení v ${p.T} s a velikost rychlosti v témže čase.`,
+hint:'Pro jistotu určete i velikost zrychlení.',
+ans:p=>{const v=[3*p.a*p.T**2,-2*p.b*p.T,0],a=[6*p.a*p.T,-2*p.b,0];return[{l:'a<sub>x</sub> =',v:a[0],u:'m/s²'},{l:'a<sub>y</sub> =',v:a[1],u:'m/s²'},{l:'a<sub>z</sub> =',v:0,u:'m/s²'},{l:'|a| =',v:len(a),u:'m/s²'},{l:'|v| =',v:len(v),u:'m/s'}]},
+sol:p=>{const v=[3*p.a*p.T**2,-2*p.b*p.T,0],a=[6*p.a*p.T,-2*p.b,0];return `<p class="f">v⃗(t) = ${3*p.a}t²<b><i>i</i></b> − ${2*p.b}t<b><i>j</i></b>, &nbsp; a⃗(t) = dv⃗/dt = ${6*p.a}t<b><i>i</i></b> − ${2*p.b}<b><i>j</i></b></p>
+<p>V čase ${p.T} s: <span class="f">a⃗ = ${V(a)} m/s², |a| = ${N(len(a))} m/s²</span></p>
+<p>Rychlost: <span class="f">v⃗ = ${V(v)} m/s, |v| = √(${N(v[0])}² + ${N(Math.abs(v[1]))}²) = ${N(len(v))} m/s</span></p>`}});
+
+/* ---------- 10 – 14 ---------- */
+const brake=(n,v0,a)=>def({n,t:'kin',p:{v0,a},rnd:()=>({v0:Ri(5,30),a:Ri(1,6)}),
+text:p=>n===10?`Hmotný bod se pohybuje rychlostí ${p.v0} m s<sup>−1</sup> a začne brzdit se zpomalením a = ${p.a} m s<sup>−2</sup>. Za jak dlouho zastaví? Jakou dráhu urazí?`:`Hmotný bod se pohybuje přímočaře s počáteční rychlostí ${p.v0} m s<sup>−1</sup> a se zpomalením ${p.a} m s<sup>−2</sup>. Za jak dlouho zastaví a jakou dráhu urazí?`,
+ans:p=>[{l:'t =',v:p.v0/p.a,u:'s'},{l:'s =',v:p.v0**2/(2*p.a),u:'m'}],
+sol:p=>`<p>Rovnoměrně zpomalený pohyb: <span class="f">v(t) = v<sub>0</sub> − at</span>, zastaví, když v = 0:</p>
+<p class="f">t = v<sub>0</sub>/a = ${p.v0}/${p.a} = ${N(p.v0/p.a)} s</p>
+<p class="f">s = v<sub>0</sub>t − ½at² = v<sub>0</sub>²/(2a) = ${p.v0}²/(2·${p.a}) = ${N(p.v0**2/(2*p.a))} m</p>`});
+brake(10,8,2);
+def({n:11,t:'kin',p:{a:5,s:20},rnd:()=>({a:Ri(1,8),s:Ri(10,100)}),
+text:p=>`Hmotný bod z klidu zrychluje se zrychlením a = ${p.a} m s<sup>−2</sup>. Za jak dlouho urazí ${p.s} m? Jakou bude mít v tuto chvíli rychlost?`,
+ans:p=>{const t=Math.sqrt(2*p.s/p.a);return[{l:'t =',v:t,u:'s'},{l:'v =',v:p.a*t,u:'m/s'}]},
+sol:p=>{const t=Math.sqrt(2*p.s/p.a);return `<p class="f">s = ½at² ⇒ t = √(2s/a) = √(2·${p.s}/${p.a}) = ${N(t)} s</p><p class="f">v = at = ${p.a}·${N(t)} = ${N(p.a*t)} m/s &nbsp; (kontrola: v = √(2as) = ${N(Math.sqrt(2*p.a*p.s))} m/s)</p>`}});
+def({n:12,t:'kin',p:{v0:8,v:12,s:25},rnd:()=>{const v0=Ri(2,15);return{v0,v:v0+Ri(2,10),s:Ri(10,60)}},
+text:p=>`Hmotný bod má rychlost ${p.v0} m s<sup>−1</sup>. Na dráze ${p.s} m zvýší rychlost na ${p.v} m s<sup>−1</sup>. Určete příslušné zrychlení tohoto pohybu a jak dlouho pohyb trvá.`,
+ans:p=>{const a=(p.v**2-p.v0**2)/(2*p.s);return[{l:'a =',v:a,u:'m/s²'},{l:'t =',v:(p.v-p.v0)/a,u:'s'}]},
+sol:p=>{const a=(p.v**2-p.v0**2)/(2*p.s);return `<p>Z rovnic <span class="f">v = v<sub>0</sub> + at</span> a <span class="f">s = v<sub>0</sub>t + ½at²</span> vyloučíme čas: <span class="f">v² − v<sub>0</sub>² = 2as</span></p>
+<p class="f">a = (v² − v<sub>0</sub>²)/(2s) = (${p.v}² − ${p.v0}²)/(2·${p.s}) = ${N(a)} m/s²</p><p class="f">t = (v − v<sub>0</sub>)/a = (${p.v} − ${p.v0})/${N(a)} = ${N((p.v-p.v0)/a)} s &nbsp; (kontrola: t = 2s/(v<sub>0</sub>+v) = ${N(2*p.s/(p.v0+p.v))} s)</p>`}});
+def({n:13,t:'kin',p:{v0:25,v:18,s:8},rnd:()=>{const v0=Ri(12,35);return{v0,v:v0-Ri(3,10),s:Ri(5,40)}},
+text:p=>`Hmotný bod má rychlost ${p.v0} m s<sup>−1</sup>. Na dráze ${p.s} m sníží rychlost na ${p.v} m s<sup>−1</sup>. Určete příslušné zrychlení (zpomalení) a dobu pohybu.`,
+hint:'Zrychlení můžete zadat se znaménkem minus i jako velikost zpomalení.',
+ans:p=>{const a=(p.v**2-p.v0**2)/(2*p.s);return[{l:'a =',v:a,u:'m/s²',abs:1},{l:'t =',v:(p.v-p.v0)/a,u:'s'}]},
+sol:p=>{const a=(p.v**2-p.v0**2)/(2*p.s);return `<p class="f">v² − v<sub>0</sub>² = 2as ⇒ a = (${p.v}² − ${p.v0}²)/(2·${p.s}) = ${N(a)} m/s²</p><p>Záporné znaménko znamená zpomalení o velikosti ${N(-a)} m/s².</p>
+<p class="f">t = (v − v<sub>0</sub>)/a = (${p.v} − ${p.v0})/(${N(a)}) = ${N((p.v-p.v0)/a)} s</p>`}});
+brake(14,20,5);
+
+/* ---------- 15, 16 ---------- */
+const typ=a=>a>0?1:a<0?2:0;
+def({n:15,t:'kin',p:{b:5,c:3},rnd:()=>({b:pick([-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8]),c:Ri(1,20)}),
+text:p=>`Rychlost hmotného bodu je <span class="f">v = ${poly([[p.b,T1],[p.c,'']])}</span>. Určete počáteční rychlost, zrychlení a typ pohybu.`,
+ans:p=>[{l:'v<sub>0</sub> =',v:p.c,u:'m/s'},{l:'a =',v:p.b,u:'m/s²'},{l:'typ:',sel:TYPY,v:typ(p.b)}],
+sol:p=>`<p>Počáteční rychlost je hodnota v čase t = 0: <span class="f">v<sub>0</sub> = ${p.c} m/s</span>. Zrychlení je derivace rychlosti: <span class="f">a = dv/dt = ${p.b} m/s²</span> = konst.</p><p>Zrychlení je konstantní ${p.b>0?'a kladné → pohyb je <b>rovnoměrně zrychlený</b>':'a záporné → pohyb je <b>rovnoměrně zpomalený</b>'} (rychlost je lineární funkcí času).</p>`});
+def({n:16,t:'kin',p:{a:3,b:4,c:2},rnd:()=>({a:pick([-4,-3,-2,-1,1,2,3,4,5]),b:Ri(1,15),c:Ri(0,20)}),
+text:p=>`Dráha hmotného bodu je <span class="f">x = ${poly([[p.a,T2],[p.b,T1],[p.c,'']])}</span>. Určete počáteční rychlost, počáteční dráhu, zrychlení a typ pohybu.`,
+ans:p=>[{l:'v<sub>0</sub> =',v:p.b,u:'m/s'},{l:'x<sub>0</sub> =',v:p.c,u:'m'},{l:'a =',v:2*p.a,u:'m/s²'},{l:'typ:',sel:TYPY,v:typ(p.a)}],
+sol:p=>`<p>Porovnáme s <span class="f">x = x<sub>0</sub> + v<sub>0</sub>t + ½at²</span>, případně derivujeme:</p><p class="f">v = dx/dt = ${poly([[2*p.a,T1],[p.b,'']])}, &nbsp; a = dv/dt = ${2*p.a} m/s²</p>
+<p class="f">x<sub>0</sub> = x(0) = ${p.c} m, &nbsp; v<sub>0</sub> = v(0) = ${p.b} m/s, &nbsp; a = ${2*p.a} m/s²</p><p>Pozor: zrychlení je <b>dvojnásobek</b> koeficientu u t² (½a = ${p.a}). Pohyb je <b>${TYPY[typ(p.a)]}</b>.</p>`});
+
+/* ---------- 17, 18 ---------- */
+def({n:17,t:'kin',p:{s1:400,v:65,s2:5},rnd:()=>({s1:Ri(2,10)*50,v:Ri(40,110),s2:Ri(1,10)}),
+text:p=>`Auto se z klidu rovnoměrně rozjede na ${p.s1} m na rychlost ${p.v} km/h a poté jede rovnoměrně ještě ${p.s2} km. Určete celkový čas jízdy. Načrtněte grafy s(t), v(t), a(t).`,
+ans:p=>{const v=kmh(p.v),t1=2*p.s1/v,t2=p.s2*1000/v;return[{l:'t<sub>1</sub> (rozjezd) =',v:t1,u:'s'},{l:'t<sub>2</sub> (rovnoměrně) =',v:t2,u:'s'},{l:'t<sub>celk</sub> =',v:t1+t2,u:'s'}]},
+sol:p=>{const v=kmh(p.v),t1=2*p.s1/v,t2=p.s2*1000/v,a=v*v/(2*p.s1),T=t1+t2;
+ const sF=t=>t<t1?a*t*t/2:p.s1+v*(t-t1),vF=t=>t<t1?a*t:v,aF=t=>t<t1?a:0;
+ return `<p>Převod: <span class="f">v = ${p.v} km/h = ${p.v}/3,6 = ${N(v)} m/s</span></p>
+<p><b>1. úsek (rovnoměrně zrychlený z klidu):</b> průměrná rychlost je v/2, takže <span class="f">t<sub>1</sub> = 2s<sub>1</sub>/v = 2·${p.s1}/${N(v)} = ${N(t1)} s</span>; zrychlení <span class="f">a = v²/(2s<sub>1</sub>) = ${N(a)} m/s²</span>.</p>
+<p><b>2. úsek (rovnoměrný):</b> <span class="f">t<sub>2</sub> = s<sub>2</sub>/v = ${p.s2*1000}/${N(v)} = ${N(t2)} s</span></p>
+<p><b>Celkem:</b> <span class="f">t = t<sub>1</sub> + t<sub>2</sub> = ${N(T)} s ≈ ${Math.floor(T/60)} min ${N(T%60,0)} s</span></p>
+${figs([fig(plot({s:[S(sF,0,T)],yl:'s [m]',xl:'t',marks:[[t1,p.s1,'']],w:220,h:150}),'s(t): parabola, pak přímka'),fig(plot({s:[S(vF,0,T,300)],yl:'v',xl:'t',marks:[[t1,v,'']],w:220,h:150}),'v(t)'),fig(plot({s:[S(aF,0,T,600)],yl:'a',xl:'t',w:220,h:150}),'a(t)')])}`}});
+def({n:18,t:'kin',p:{s1:3,v:72,s2:250},rnd:()=>({s1:Ri(1,8),v:Ri(36,120),s2:Ri(2,8)*50}),
+text:p=>`Auto jelo ${p.s1} km rovnoměrně rychlostí ${p.v} km/h a pak začalo rovnoměrně brzdit a za ${p.s2} m zastavilo. Určete celkový čas jízdy. Nakreslete grafy s(t), v(t), a(t).`,
+ans:p=>{const v=kmh(p.v),t1=p.s1*1000/v,t2=2*p.s2/v;return[{l:'t<sub>1</sub> (rovnoměrně) =',v:t1,u:'s'},{l:'t<sub>2</sub> (brzdění) =',v:t2,u:'s'},{l:'t<sub>celk</sub> =',v:t1+t2,u:'s'}]},
+sol:p=>{const v=kmh(p.v),t1=p.s1*1000/v,t2=2*p.s2/v,a=v*v/(2*p.s2),T=t1+t2,S1=p.s1*1000;
+ const sF=t=>t<t1?v*t:S1+v*(t-t1)-a*(t-t1)**2/2,vF=t=>t<t1?v:v-a*(t-t1),aF=t=>t<t1?0:-a;
+ return `<p>Převod: <span class="f">v = ${p.v} km/h = ${N(v)} m/s</span></p>
+<p><b>1. úsek:</b> <span class="f">t<sub>1</sub> = s<sub>1</sub>/v = ${S1}/${N(v)} = ${N(t1)} s</span></p>
+<p><b>2. úsek (rovnoměrně zpomalený do zastavení):</b> průměrná rychlost v/2 ⇒ <span class="f">t<sub>2</sub> = 2s<sub>2</sub>/v = ${N(t2)} s</span>; zpomalení <span class="f">a = v²/(2s<sub>2</sub>) = ${N(a)} m/s²</span></p>
+<p><b>Celkem:</b> <span class="f">t = ${N(T)} s</span></p>
+${figs([fig(plot({s:[S(sF,0,T)],yl:'s [m]',xl:'t',marks:[[t1,S1,'']],w:220,h:150}),'s(t): přímka, pak parabola'),fig(plot({s:[S(vF,0,T,300)],yl:'v',xl:'t',marks:[[t1,v,'']],w:220,h:150}),'v(t)'),fig(plot({s:[S(aF,0,T,600)],yl:'a',xl:'t',w:220,h:150}),'a(t)')])}`}});
+
+/* ---------- 19 – 27 kružnice ---------- */
+const cir=(R,w,eps)=>{const v=w*R,at=eps*R,an=w*w*R;return{v,at,an,a:Math.hypot(at,an)}};
+const cirSol=(R,w,eps,pre)=>{const c=cir(R,w,eps);return `${pre||''}<p class="f">v = ωR = ${N(w)}·${N(R)} = ${N(c.v)} m/s</p>
+<p class="f">a<sub>t</sub> = εR = ${N(eps)}·${N(R)} = ${N(c.at)} m/s²</p><p class="f">a<sub>n</sub> = v²/R = ω²R = ${N(w)}²·${N(R)} = ${N(c.an)} m/s²</p>
+<p class="f">a = √(a<sub>t</sub>² + a<sub>n</sub>²) = ${N(c.a)} m/s²</p>`};
+def({n:19,t:'kruh',p:{R:2,T:5},rnd:()=>({R:Rd(.5,5,.5),T:Ri(1,10)}),
+text:p=>`Hmotný bod se pohybuje rovnoměrně po kružnici o poloměru ${N(p.R)} m, oběhne ji jednou za ${p.T} s. Určete obvodovou rychlost, tečné, normálové i celkové zrychlení.`,
+ans:p=>{const c=cir(p.R,2*PI/p.T,0);return[{l:'v =',v:c.v,u:'m/s'},{l:'a<sub>t</sub> =',v:0,u:'m/s²'},{l:'a<sub>n</sub> =',v:c.an,u:'m/s²'},{l:'a =',v:c.a,u:'m/s²'}]},
+sol:p=>cirSol(p.R,2*PI/p.T,0,`<p>Rovnoměrný pohyb ⇒ ω je konstantní, ε = 0, tedy tečné zrychlení je nulové. <span class="f">ω = 2π/T = ${N(2*PI/p.T)} rad/s</span> (obvodová rychlost také <span class="f">v = 2πR/T</span>).</p>`)});
+def({n:20,t:'kruh',p:{R:80,f:4},rnd:()=>({R:Ri(10,150),f:Ri(1,10)}),
+text:p=>`Hmotný bod se pohybuje rovnoměrně po kružnici o poloměru ${p.R} cm, oběhne ji ${p.f}× za sekundu. Určete úhlovou rychlost a úhlové zrychlení.`,
+hint:'Navíc určete i obvodovou rychlost.',
+ans:p=>[{l:'ω =',v:2*PI*p.f,u:'rad/s'},{l:'ε =',v:0,u:'rad/s²'},{l:'v =',v:2*PI*p.f*p.R/100,u:'m/s'}],
+sol:p=>`<p>Frekvence <span class="f">f = ${p.f} Hz</span> (${p.f} oběhů za sekundu), perioda <span class="f">T = 1/f = ${N(1/p.f)} s</span>.</p><p class="f">ω = 2πf = 2π·${p.f} = ${N(2*PI*p.f)} rad/s</p><p>Pohyb je rovnoměrný ⇒ <span class="f">ε = dω/dt = 0</span>.</p><p class="f">v = ωR = ${N(2*PI*p.f)}·${N(p.R/100)} = ${N(2*PI*p.f*p.R/100)} m/s</p>`});
+def({n:21,t:'kruh',p:{R:2.5,w:8},rnd:()=>({R:Rd(.5,5,.5),w:Ri(1,15)}),
+text:p=>`Hmotný bod se pohybuje po kružnici o poloměru ${N(p.R)} m s úhlovou rychlostí ${p.w} rad s<sup>−1</sup>. Určete obvodovou rychlost, tečné, normálové i celkové zrychlení.`,
+ans:p=>{const c=cir(p.R,p.w,0);return[{l:'v =',v:c.v,u:'m/s'},{l:'a<sub>t</sub> =',v:0,u:'m/s²'},{l:'a<sub>n</sub> =',v:c.an,u:'m/s²'},{l:'a =',v:c.a,u:'m/s²'}]},
+sol:p=>cirSol(p.R,p.w,0,`<p>Úhlová rychlost je konstantní ⇒ ε = 0, tečné zrychlení je nulové, celkové zrychlení = normálové.</p>`)});
+def({n:22,t:'kruh',p:{a:2,b:6,c:5,R:80,T:1},rnd:()=>({a:Ri(1,4),b:Ri(1,8),c:Ri(1,9),R:Ri(20,150),T:Ri(1,3)}),
+text:p=>`Hmotný bod se pohybuje po kružnici o poloměru ${p.R} cm s rychlostí <span class="f">v = ${poly([[p.a,T3],[p.b,T1],[p.c,'']])}</span>. Určete tečné, normálové a celkové zrychlení.`,
+hint:'Obecně jde o funkce času – pro kontrolu výpočtu dosaďte t = T s.',
+ans:p=>{const t=p.T,R=p.R/100,v=p.a*t**3+p.b*t+p.c,at=3*p.a*t*t+p.b,an=v*v/R;return[{l:`a<sub>t</sub>(${t} s) =`,v:at,u:'m/s²'},{l:`a<sub>n</sub>(${t} s) =`,v:an,u:'m/s²'},{l:`a(${t} s) =`,v:Math.hypot(at,an),u:'m/s²'}]},
+sol:p=>{const t=p.T,R=p.R/100,v=p.a*t**3+p.b*t+p.c,at=3*p.a*t*t+p.b,an=v*v/R;return `<p>Obecně (R = ${N(R)} m):</p>
+<p class="f">a<sub>t</sub> = dv/dt = ${poly([[3*p.a,T2],[p.b,'']])}</p><p class="f">a<sub>n</sub> = v²/R = (${poly([[p.a,T3],[p.b,T1],[p.c,'']])})² / ${N(R)}</p><p class="f">a = √(a<sub>t</sub>² + a<sub>n</sub>²)</p>
+<p>Pro t = ${t} s: <span class="f">v = ${N(v)} m/s, a<sub>t</sub> = ${N(at)} m/s², a<sub>n</sub> = ${N(v)}²/${N(R)} = ${N(an)} m/s², a = ${N(Math.hypot(at,an))} m/s²</span></p>`}});
+def({n:23,t:'kruh',p:{a:2,b:6,c:5,R:80,T:1},rnd:()=>({a:Ri(1,4),b:Ri(1,8),c:Ri(1,9),R:Ri(20,150),T:Ri(1,3)}),
+text:p=>`Hmotný bod se pohybuje po kružnici o poloměru ${p.R} cm s úhlovou rychlostí <span class="f">ω = ${poly([[p.a,T3],[p.b,T1],[p.c,'']])}</span>. Určete tečné, normálové a celkové zrychlení.`,
+hint:'Obecně jde o funkce času – pro kontrolu výpočtu dosaďte t = T s.',
+ans:p=>{const t=p.T,R=p.R/100,w=p.a*t**3+p.b*t+p.c,e=3*p.a*t*t+p.b,c=cir(R,w,e);return[{l:`a<sub>t</sub>(${t} s) =`,v:c.at,u:'m/s²'},{l:`a<sub>n</sub>(${t} s) =`,v:c.an,u:'m/s²'},{l:`a(${t} s) =`,v:c.a,u:'m/s²'}]},
+sol:p=>{const t=p.T,R=p.R/100,w=p.a*t**3+p.b*t+p.c,e=3*p.a*t*t+p.b;return `<p>Obecně: <span class="f">ε = dω/dt = ${poly([[3*p.a,T2],[p.b,'']])}</span>, &nbsp; <span class="f">a<sub>t</sub> = εR = ${N(R)}·(${poly([[3*p.a,T2],[p.b,'']])})</span>, &nbsp; <span class="f">a<sub>n</sub> = ω²R = ${N(R)}·(${poly([[p.a,T3],[p.b,T1],[p.c,'']])})²</span>, &nbsp; <span class="f">a = √(a<sub>t</sub>² + a<sub>n</sub>²)</span></p>`+cirSol(R,w,e,`<p>Pro t = ${t} s: <span class="f">ω = ${N(w)} rad/s, ε = ${N(e)} rad/s²</span></p>`)}});
+def({n:24,t:'kruh',p:{b:4,c:5,R:2,T:3},rnd:()=>({b:Ri(1,8),c:Ri(1,9),R:Ri(1,4),T:Ri(1,4)}),
+text:p=>`Úhlová dráha hmotného bodu na kružnici o poloměru ${p.R} m je <span class="f">φ = ${poly([[1,T3],[p.b,T1],[p.c,'']])}</span>. Určete obvodovou rychlost, tečné, normálové a celkové zrychlení ve ${p.T} s.`,
+ans:p=>{const w=3*p.T**2+p.b,e=6*p.T,c=cir(p.R,w,e);return[{l:'v =',v:c.v,u:'m/s'},{l:'a<sub>t</sub> =',v:c.at,u:'m/s²'},{l:'a<sub>n</sub> =',v:c.an,u:'m/s²'},{l:'a =',v:c.a,u:'m/s²'}]},
+sol:p=>{const w=3*p.T**2+p.b,e=6*p.T;return `<p class="f">ω = dφ/dt = ${poly([[3,T2],[p.b,'']])}, &nbsp; ε = dω/dt = 6t</p><p>V čase ${p.T} s: <span class="f">ω = ${N(w)} rad/s, ε = ${N(e)} rad/s²</span></p>`+cirSol(p.R,w,e)}});
+def({n:25,t:'kruh',p:{R:240,n:40},rnd:()=>({R:Ri(5,30)*10,n:Ri(10,120)}),
+text:p=>`Kolo o poloměru ${p.R} cm se otáčí s frekvencí ${p.n} ot/min. Určete periodu, obvodovou rychlost, tečné, normálové a celkové zrychlení bodu na okraji kola.`,
+ans:p=>{const w=2*PI*p.n/60,c=cir(p.R/100,w,0);return[{l:'T =',v:60/p.n,u:'s'},{l:'v =',v:c.v,u:'m/s'},{l:'a<sub>t</sub> =',v:0,u:'m/s²'},{l:'a<sub>n</sub> =',v:c.an,u:'m/s²'},{l:'a =',v:c.a,u:'m/s²'}]},
+sol:p=>{const f=p.n/60,w=2*PI*f;return cirSol(p.R/100,w,0,`<p>Převod: <span class="f">f = ${p.n}/60 = ${N(f)} Hz</span>, perioda <span class="f">T = 1/f = ${N(1/f)} s</span>, <span class="f">ω = 2πf = ${N(w)} rad/s</span>, R = ${N(p.R/100)} m. Otáčení je rovnoměrné ⇒ ε = 0.</p>`)}});
+def({n:26,t:'kruh',p:{R:240,n:40,tz:20,T:4},rnd:()=>({R:Ri(5,30)*10,n:Ri(10,120),tz:Ri(5,40),T:Ri(1,4)}),
+text:p=>`Kolo o poloměru ${p.R} cm se otáčí s frekvencí ${p.n} ot/min a začne zpomalovat, až se za ${p.tz} s zastaví. Určete úhlové zrychlení, rychlost a zrychlení ve ${p.T} s brzdění.`,
+hint:'Záporné hodnoty (zpomalení) můžete zadat i jako velikost.',
+ans:p=>{const w0=2*PI*p.n/60,e=-w0/p.tz,w=w0+e*p.T,c=cir(p.R/100,w,e);return[{l:'ε =',v:e,u:'rad/s²',abs:1},{l:'v =',v:c.v,u:'m/s'},{l:'a<sub>t</sub> =',v:c.at,u:'m/s²',abs:1},{l:'a<sub>n</sub> =',v:c.an,u:'m/s²'},{l:'a =',v:c.a,u:'m/s²'}]},
+sol:p=>{const w0=2*PI*p.n/60,e=-w0/p.tz,w=w0+e*p.T;return `<p class="f">ω<sub>0</sub> = 2π·${p.n}/60 = ${N(w0)} rad/s</p><p class="f">ε = (0 − ω<sub>0</sub>)/t<sub>z</sub> = −${N(w0)}/${p.tz} = ${N(e)} rad/s²</p><p class="f">ω(${p.T} s) = ω<sub>0</sub> + εt = ${N(w0)} − ${N(-e)}·${p.T} = ${N(w)} rad/s</p>`+cirSol(p.R/100,w,e)}});
+def({n:27,t:'kruh',p:{R:140,n1:32,n2:85,tz:50,T:20},rnd:()=>{const n1=Ri(10,60);return{R:Ri(5,30)*10,n1,n2:n1+Ri(10,80),tz:Ri(10,60),T:Ri(2,9)}},
+text:p=>`Kolo o poloměru ${p.R} cm se otáčí s frekvencí ${p.n1} ot/min a zrychlí na ${p.n2} ot/min za ${p.tz} s. Určete úhlové zrychlení, rychlost a zrychlení ve ${p.T} s zrychlování.`,
+ans:p=>{const w1=2*PI*p.n1/60,w2=2*PI*p.n2/60,e=(w2-w1)/p.tz,w=w1+e*p.T,c=cir(p.R/100,w,e);return[{l:'ε =',v:e,u:'rad/s²'},{l:'v =',v:c.v,u:'m/s'},{l:'a<sub>t</sub> =',v:c.at,u:'m/s²'},{l:'a<sub>n</sub> =',v:c.an,u:'m/s²'},{l:'a =',v:c.a,u:'m/s²'}]},
+sol:p=>{const w1=2*PI*p.n1/60,w2=2*PI*p.n2/60,e=(w2-w1)/p.tz,w=w1+e*p.T;return `<p class="f">ω<sub>1</sub> = 2π·${p.n1}/60 = ${N(w1)} rad/s, &nbsp; ω<sub>2</sub> = 2π·${p.n2}/60 = ${N(w2)} rad/s</p><p class="f">ε = (ω<sub>2</sub> − ω<sub>1</sub>)/t = ${N(w2-w1)}/${p.tz} = ${N(e)} rad/s²</p><p class="f">ω(${p.T} s) = ${N(w1)} + ${N(e)}·${p.T} = ${N(w)} rad/s</p>`+cirSol(p.R/100,w,e)}});
+const CIRC=`<svg class="plot" viewBox="0 0 240 220" width="240" height="220"><defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#555"/></marker></defs>
+<line x1="20" y1="110" x2="225" y2="110" stroke="#555" marker-end="url(#a2)"/><line x1="120" y1="205" x2="120" y2="10" stroke="#555" marker-end="url(#a2)"/>
+<circle cx="120" cy="110" r="75" fill="none" stroke="#008a82" stroke-width="2"/><line x1="120" y1="110" x2="173" y2="57" stroke="#c2185b" stroke-width="2"/><circle cx="173" cy="57" r="4" fill="#c2185b"/>
+<path d="M150 110 A30 30 0 0 0 141 89" fill="none" stroke="#333"/><text x="153" y="100" font-size="12">φ = ωt</text><text x="138" y="78" font-size="12" fill="#c2185b">R</text>
+<line x1="173" y1="57" x2="173" y2="110" stroke="#aaa" stroke-dasharray="3 3"/><text x="160" y="125" font-size="11">x = R cos ωt</text><text x="178" y="52" font-size="11">[x; y]</text><text x="215" y="125" font-size="12">x</text><text x="126" y="18" font-size="12">y</text></svg>`;
+def({n:28,t:'kruh',text:()=>`Napište polohový vektor pohybu po kružnici, definujte koeficienty a určete rovnici trajektorie. Zakreslete obrázek.`,
+theory:()=>`<p class="f">r⃗(t) = R cos(ωt + φ<sub>0</sub>) <b><i>i</i></b> + R sin(ωt + φ<sub>0</sub>) <b><i>j</i></b></p>
+<p><b>R</b> – poloměr kružnice (velikost polohového vektoru, |r⃗| = R), <b>ω</b> – úhlová rychlost [rad/s] (ω = 2π/T = 2πf), <b>t</b> – čas, <b>φ<sub>0</sub></b> – počáteční fáze (úhel v čase t = 0), <b>φ = ωt + φ<sub>0</sub></b> – úhlová dráha.</p>
+<p><b>Trajektorie:</b> z x = R cos φ, y = R sin φ a cos²φ + sin²φ = 1 dostaneme <span class="f">x² + y² = R²</span> – kružnice se středem v počátku.</p>
+<p>Derivací: <span class="f">v⃗ = ωR(−sin φ; cos φ)</span>, |v| = ωR (tečná ke kružnici); <span class="f">a⃗ = −ω²R(cos φ; sin φ) = −ω²r⃗</span> (dostředivé, míří do středu).</p>${figs([fig(CIRC,'pohyb po kružnici')])}`});
+
+/* ---------- 29 – 31 ---------- */
+def({n:29,t:'dyn',p:{m:20,F:75,f:.25},rnd:()=>{const m=Ri(5,40),f=Rd(.1,.4,.05);return{m,f,F:Math.ceil(f*m*g)+Ri(5,60)}},
+text:p=>`Bednu o m = ${p.m} kg taháme (vodorovně) silou ${p.F} N. Koeficient smykového tření je ${N(p.f)}. Určete třecí sílu a zrychlení.`,
+ans:p=>{const Ft=p.f*p.m*g;return[{l:'F<sub>t</sub> =',v:Ft,u:'N'},{l:'a =',v:(p.F-Ft)/p.m,u:'m/s²'}]},
+sol:p=>{const Ft=p.f*p.m*g;return `<p class="f">F<sub>t</sub> = f·N = f·mg = ${N(p.f)}·${p.m}·9,81 = ${N(Ft)} N</p><p>2. Newtonův zákon: <span class="f">ma = F − F<sub>t</sub> ⇒ a = (${p.F} − ${N(Ft)})/${p.m} = ${N((p.F-Ft)/p.m)} m/s²</span></p>`}});
+def({n:30,t:'dyn',p:{m:8,F:30,T:5},rnd:()=>({m:Ri(2,30),F:Ri(10,100),T:Ri(2,10)}),
+text:p=>`Bednu o m = ${p.m} kg taháme silou ${p.F} N. Jakou rychlost a dráhu bude mít po ${p.T} s? Tření zanedbejte.`,
+ans:p=>{const a=p.F/p.m;return[{l:'v =',v:a*p.T,u:'m/s'},{l:'s =',v:a*p.T**2/2,u:'m'}]},
+sol:p=>{const a=p.F/p.m;return `<p class="f">a = F/m = ${p.F}/${p.m} = ${N(a)} m/s²</p><p>Z klidu: <span class="f">v = at = ${N(a*p.T)} m/s, &nbsp; s = ½at² = ${N(a*p.T**2/2)} m</span></p>`}});
+def({n:31,t:'dyn',p:{m:25,F:140,f:.12,T:8},rnd:()=>{const m=Ri(5,40),f=Rd(.05,.4,.01);return{m,f,F:Math.ceil(f*m*g)+Ri(10,120),T:Ri(2,10)}},
+text:p=>`Bednu o m = ${p.m} kg taháme silou ${p.F} N. Koeficient smykového tření je ${N(p.f)}. Určete zrychlení a rychlost v ${p.T} s.`,
+ans:p=>{const a=(p.F-p.f*p.m*g)/p.m;return[{l:'a =',v:a,u:'m/s²'},{l:'v =',v:a*p.T,u:'m/s'}]},
+sol:p=>{const Ft=p.f*p.m*g,a=(p.F-Ft)/p.m;return `<p class="f">F<sub>t</sub> = f·mg = ${N(p.f)}·${p.m}·9,81 = ${N(Ft)} N</p><p class="f">a = (F − F<sub>t</sub>)/m = (${p.F} − ${N(Ft)})/${p.m} = ${N(a)} m/s²</p><p class="f">v = at = ${N(a)}·${p.T} = ${N(a*p.T)} m/s &nbsp; (z klidu)</p>`}});
+
+/* ---------- 32, 33 ---------- */
+def({n:32,t:'dyn',text:()=>`Setrvačné síly. Inerciální a neinerciální soustava.`,
+theory:()=>`<p><b>Inerciální vztažná soustava</b> je soustava, ve které platí 1. Newtonův zákon (zákon setrvačnosti): těleso, na které nepůsobí síly (nebo je výslednice nulová), je v klidu nebo v rovnoměrném přímočarém pohybu. Každá soustava, která se vůči inerciální pohybuje rovnoměrně přímočaře, je také inerciální (Galileiho princip relativity).</p>
+<p><b>Neinerciální soustava</b> se vůči inerciální pohybuje se zrychlením (zrychluje, brzdí, otáčí se). Newtonovy zákony v ní neplatí v původním tvaru – abychom je mohli použít, musíme zavést <b>setrvačné (zdánlivé) síly</b>. Nemají původ ve vzájemném působení těles, nemají reakci.</p>
+<ul><li>Soustava se zrychlením a⃗<sub>0</sub>: <span class="f">F⃗<sub>s</sub> = −m a⃗<sub>0</sub></span> (např. v rozjíždějícím se autobusu nás „tlačí“ dozadu).</li>
+<li>Rotující soustava: <b>odstředivá síla</b> <span class="f">F<sub>o</sub> = mω²r = mv²/r</span> (směřuje od osy), <b>Coriolisova síla</b> <span class="f">F⃗<sub>C</sub> = −2m ω⃗ × v⃗′</span> (působí na tělesa pohybující se v rotující soustavě rychlostí v′), případně Eulerova síla při změně ω.</li></ul>
+<p>Pohybová rovnice v neinerciální soustavě: <span class="f">m a⃗′ = F⃗ + F⃗<sub>s</sub></span>.</p>`});
+def({n:33,t:'dyn',text:()=>`Newtonovy pohybové zákony, definice síly, hybnosti, impulsu síly.`,
+theory:()=>`<p><b>1. zákon (setrvačnosti):</b> Těleso setrvává v klidu nebo v rovnoměrném přímočarém pohybu, dokud není přinuceno vnějšími silami tento stav změnit (platí v inerciálních soustavách).</p>
+<p><b>2. zákon (zákon síly):</b> Časová změna hybnosti je rovna výsledné působící síle: <span class="f">F⃗ = dp⃗/dt</span>; pro konstantní hmotnost <span class="f">F⃗ = m a⃗</span>.</p>
+<p><b>3. zákon (akce a reakce):</b> Působí-li těleso A na těleso B silou F⃗, působí těleso B na A stejně velkou silou opačného směru. Síly současně vznikají i zanikají, každá působí na jiné těleso (proto se neruší).</p>
+<p><b>Síla</b> je vektorová veličina vyjadřující míru vzájemného působení těles, které mění pohybový stav tělesa nebo jej deformuje. Jednotka 1 N = 1 kg·m·s<sup>−2</sup>.</p>
+<p><b>Hybnost:</b> <span class="f">p⃗ = m v⃗</span>, jednotka kg·m·s<sup>−1</sup>.</p>
+<p><b>Impuls síly:</b> <span class="f">I⃗ = ∫<sub>t1</sub><sup>t2</sup> F⃗ dt</span> (pro konstantní sílu <span class="f">I⃗ = F⃗·Δt</span>), jednotka N·s = kg·m·s<sup>−1</sup>. Impuls síly je roven změně hybnosti: <span class="f">I⃗ = Δp⃗</span>.</p>`});
+
+/* ---------- 34 – 40 ---------- */
+def({n:34,t:'vrh',p:{m:5,h:150,T:2},rnd:()=>({m:Ri(1,20),h:Ri(8,30)*10,T:Ri(1,3)}),
+text:p=>`Těleso o m = ${p.m} kg padá z výšky ${p.h} m. Za jakou dobu dopadne? Jakou má dráhu a rychlost v ${p.T} s?`,
+ans:p=>[{l:'t<sub>d</sub> =',v:Math.sqrt(2*p.h/g),u:'s'},{l:'s =',v:g*p.T**2/2,u:'m'},{l:'v =',v:g*p.T,u:'m/s'}],
+sol:p=>`<p>Volný pád (hmotnost na výsledek nemá vliv):</p><p class="f">h = ½gt² ⇒ t = √(2h/g) = √(2·${p.h}/9,81) = ${N(Math.sqrt(2*p.h/g))} s</p><p class="f">s(${p.T}) = ½g·${p.T}² = ${N(g*p.T**2/2)} m, &nbsp; v(${p.T}) = g·${p.T} = ${N(g*p.T)} m/s</p><p>Těleso je v tu chvíli ve výšce ${N(p.h-g*p.T**2/2)} m nad zemí.</p>`});
+def({n:35,t:'vrh',p:{m:5,H:172,T:2},rnd:()=>({m:Ri(1,20),H:Ri(80,300),T:Ri(1,4)}),
+text:p=>`Těleso (${p.m} kg) vystřelené vzhůru dosáhne výšky ${p.H} m. Určete počáteční rychlost. Jaká je rychlost, výška, kinetická a potenciální energie v ${p.T} s?`,
+ans:p=>{const v0=Math.sqrt(2*g*p.H),v=v0-g*p.T,h=v0*p.T-g*p.T**2/2;return[{l:'v<sub>0</sub> =',v:v0,u:'m/s'},{l:'v =',v:v,u:'m/s'},{l:'h =',v:h,u:'m'},{l:'E<sub>k</sub> =',v:p.m*v*v/2,u:'J'},{l:'E<sub>p</sub> =',v:p.m*g*h,u:'J'}]},
+sol:p=>{const v0=Math.sqrt(2*g*p.H),v=v0-g*p.T,h=v0*p.T-g*p.T**2/2;return `<p>V nejvyšším bodě je v = 0, ze ZZE <span class="f">½mv<sub>0</sub>² = mgH</span>:</p><p class="f">v<sub>0</sub> = √(2gH) = √(2·9,81·${p.H}) = ${N(v0)} m/s</p>
+<p class="f">v(${p.T}) = v<sub>0</sub> − gt = ${N(v0)} − 9,81·${p.T} = ${N(v)} m/s</p><p class="f">h(${p.T}) = v<sub>0</sub>t − ½gt² = ${N(h)} m</p>
+<p class="f">E<sub>k</sub> = ½mv² = ½·${p.m}·${N(v)}² = ${N(p.m*v*v/2)} J, &nbsp; E<sub>p</sub> = mgh = ${p.m}·9,81·${N(h)} = ${N(p.m*g*h)} J</p>
+<p>Kontrola: E<sub>k</sub> + E<sub>p</sub> = ${N(p.m*v*v/2+p.m*g*h)} J = mgH = ${N(p.m*g*p.H)} J ✓</p>`}});
+def({n:36,t:'dyn',p:{m:5,h:12,al:40},rnd:()=>({m:Ri(1,20),h:Ri(3,25),al:Ri(15,65)}),
+text:p=>`Těleso (${p.m} kg) klouže po nakloněné rovině z výšky ${p.h} m pod úhlem ${p.al}° bez tření. Určete dobu sjíždění a koncovou rychlost.`,
+ans:p=>{const a=g*Math.sin(rad(p.al)),l=p.h/Math.sin(rad(p.al));return[{l:'t =',v:Math.sqrt(2*l/a),u:'s'},{l:'v =',v:Math.sqrt(2*g*p.h),u:'m/s'}]},
+sol:p=>{const s=Math.sin(rad(p.al)),a=g*s,l=p.h/s;return `<p>Zrychlení podél roviny: <span class="f">a = g sin α = 9,81·sin ${p.al}° = ${N(a)} m/s²</span></p><p>Délka nakloněné roviny: <span class="f">l = h / sin α = ${N(l)} m</span></p>
+<p class="f">l = ½at² ⇒ t = √(2l/a) = ${N(Math.sqrt(2*l/a))} s</p><p class="f">v = at = √(2gh) = √(2·9,81·${p.h}) = ${N(Math.sqrt(2*g*p.h))} m/s</p><p>(Koncová rychlost bez tření nezávisí na úhlu ani hmotnosti – plyne ze ZZE mgh = ½mv².)</p>`}});
+const throwFig=(vx,vy0,h0,Tf,marks)=>plot({s:[S(t=>0,0,Tf).map(([t])=>[vx*t,h0+vy0*t-g*t*t/2])],xl:'x [m]',yl:'y [m]',marks,w:340,h:190});
+def({n:37,t:'vrh',p:{m:5,v:180,al:36,T:2},rnd:()=>({m:Ri(1,20),v:Ri(9,20)*10,al:Ri(25,65),T:Ri(1,2)}),
+text:p=>`Těleso (${p.m} kg) bylo vrženo rychlostí ${p.v} km/h pod úhlem ${p.al}°. Určete výšku, délku vrhu a rychlost, kinetickou a potenciální energii v ${p.T} s.`,
+ans:p=>{const v0=kmh(p.v),vx=v0*Math.cos(rad(p.al)),vy0=v0*Math.sin(rad(p.al)),vy=vy0-g*p.T,y=vy0*p.T-g*p.T**2/2,v=Math.hypot(vx,vy);
+ return[{l:'H =',v:vy0**2/(2*g),u:'m'},{l:'D =',v:v0*v0*Math.sin(2*rad(p.al))/g,u:'m'},{l:'v =',v:v,u:'m/s'},{l:'E<sub>k</sub> =',v:p.m*v*v/2,u:'J'},{l:'E<sub>p</sub> =',v:p.m*g*y,u:'J'}]},
+sol:p=>{const v0=kmh(p.v),a=rad(p.al),vx=v0*Math.cos(a),vy0=v0*Math.sin(a),vy=vy0-g*p.T,y=vy0*p.T-g*p.T**2/2,v=Math.hypot(vx,vy),H=vy0**2/(2*g),D=v0*v0*Math.sin(2*a)/g,Tf=2*vy0/g;
+ return `<p>Převod: <span class="f">v<sub>0</sub> = ${p.v}/3,6 = ${N(v0)} m/s</span>; složky <span class="f">v<sub>x</sub> = v<sub>0</sub>cos α = ${N(vx)} m/s, v<sub>0y</sub> = v<sub>0</sub>sin α = ${N(vy0)} m/s</span></p>
+<p><b>Výška vrhu:</b> <span class="f">H = v<sub>0</sub>² sin²α / (2g) = ${N(H)} m</span></p>
+<p><b>Doba letu:</b> <span class="f">T = 2v<sub>0</sub> sin α / g = ${N(Tf)} s</span>; <b>délka vrhu:</b> <span class="f">D = v<sub>0</sub>² sin 2α / g = ${N(D)} m</span></p>
+<p><b>V čase ${p.T} s:</b> <span class="f">v<sub>y</sub> = v<sub>0y</sub> − gt = ${N(vy)} m/s, y = v<sub>0y</sub>t − ½gt² = ${N(y)} m, x = v<sub>x</sub>t = ${N(vx*p.T)} m</span></p>
+<p class="f">v = √(v<sub>x</sub>² + v<sub>y</sub>²) = ${N(v)} m/s, &nbsp; E<sub>k</sub> = ½mv² = ${N(p.m*v*v/2)} J, &nbsp; E<sub>p</sub> = mgy = ${N(p.m*g*y)} J</p>
+${figs([fig(throwFig(vx,vy0,0,Tf,[[vx*Tf/2,H,'H'],[D,0,'D','l'],[vx*p.T,y,p.T+' s']]),'trajektorie – parabola')])}`}});
+const OBL=`<svg class="plot" viewBox="0 0 320 180" width="320" height="180"><line x1="20" y1="160" x2="305" y2="160" stroke="#555"/><line x1="30" y1="170" x2="30" y2="15" stroke="#555"/>
+<path d="M30 160 Q160 -40 290 160" fill="none" stroke="#008a82" stroke-width="2"/><line x1="30" y1="160" x2="95" y2="95" stroke="#c2185b" stroke-width="2"/><text x="64" y="112" font-size="12" fill="#c2185b">v₀</text>
+<path d="M60 160 A30 30 0 0 0 52 139" fill="none" stroke="#333"/><text x="64" y="152" font-size="12">α</text><line x1="160" y1="60" x2="160" y2="160" stroke="#aaa" stroke-dasharray="3 3"/><text x="165" y="115" font-size="12">H</text><text x="155" y="175" font-size="12">D</text><text x="300" y="175" font-size="12">x</text><text x="35" y="20" font-size="12">y</text></svg>`;
+def({n:38,t:'vrh',text:()=>`Uvažujeme vrh šikmý vzhůru pod úhlem α. Určete (odvoďte) výšku vrhu.`,
+theory:()=>`<p>Rozložíme pohyb: <span class="f">x(t) = v<sub>0</sub>t cos α, &nbsp; y(t) = v<sub>0</sub>t sin α − ½gt², &nbsp; v<sub>y</sub>(t) = v<sub>0</sub> sin α − gt</span></p>
+<p>V nejvyšším bodě je svislá složka rychlosti nulová: <span class="f">v<sub>y</sub> = 0 ⇒ t<sub>H</sub> = v<sub>0</sub> sin α / g</span></p>
+<p>Dosadíme do y(t): <span class="f">H = v<sub>0</sub> sin α · (v<sub>0</sub> sin α / g) − ½g (v<sub>0</sub> sin α / g)² = v<sub>0</sub>² sin²α / g − v<sub>0</sub>² sin²α / (2g)</span></p>
+<p><span class="box f">H = v<sub>0</sub>² sin²α / (2g)</span></p>${figs([fig(OBL,'šikmý vrh')])}`});
+def({n:39,t:'vrh',text:()=>`Uvažujeme vrh šikmý vzhůru pod úhlem α. Určete (odvoďte) délku vrhu.`,
+theory:()=>`<p class="f">x(t) = v<sub>0</sub>t cos α, &nbsp; y(t) = v<sub>0</sub>t sin α − ½gt²</p>
+<p>Těleso dopadne, když y = 0: <span class="f">t(v<sub>0</sub> sin α − ½gt) = 0 ⇒ t<sub>D</sub> = 2v<sub>0</sub> sin α / g</span> (dvojnásobek doby výstupu).</p>
+<p>Dosadíme do x(t): <span class="f">D = v<sub>0</sub> cos α · 2v<sub>0</sub> sin α / g = 2v<sub>0</sub>² sin α cos α / g</span>, a protože 2 sin α cos α = sin 2α:</p>
+<p><span class="box f">D = v<sub>0</sub>² sin 2α / g</span> &nbsp; – maximální pro α = 45°.</p>${figs([fig(OBL,'šikmý vrh')])}`});
+def({n:40,t:'vrh',p:{m:5,h:350,v:210,T:4},rnd:()=>({m:Ri(1,20),h:Ri(20,50)*10,v:Ri(5,25)*10,T:Ri(2,5)}),
+text:p=>`Těleso bylo vrženo vodorovně z výšky ${p.h} m rychlostí ${p.v} km/h. Určete výšku, délku vrhu a rychlost, kinetickou a potenciální energii v ${p.T} s.`,
+hint:p=>`Hmotnost v zadání chybí – pro energie uvažujte m = ${p.m} kg (jako v předchozích příkladech).`,
+ans:p=>{const v0=kmh(p.v),vy=g*p.T,y=p.h-g*p.T**2/2,v=Math.hypot(v0,vy);return[{l:`výška v ${p.T} s: y =`,v:y,u:'m'},{l:'délka vrhu D =',v:v0*Math.sqrt(2*p.h/g),u:'m'},{l:'v =',v:v,u:'m/s'},{l:'E<sub>k</sub> =',v:p.m*v*v/2,u:'J'},{l:'E<sub>p</sub> =',v:p.m*g*y,u:'J'}]},
+sol:p=>{const v0=kmh(p.v),vy=g*p.T,y=p.h-g*p.T**2/2,v=Math.hypot(v0,vy),Tf=Math.sqrt(2*p.h/g);return `<p>Uvažujeme m = ${p.m} kg (v zadání chybí). <span class="f">v<sub>0</sub> = ${p.v}/3,6 = ${N(v0)} m/s</span></p>
+<p class="f">x(t) = v<sub>0</sub>t, &nbsp; y(t) = h − ½gt², &nbsp; v<sub>x</sub> = v<sub>0</sub>, &nbsp; v<sub>y</sub> = −gt</p>
+<p><b>Doba letu:</b> <span class="f">t<sub>D</sub> = √(2h/g) = ${N(Tf)} s</span>; <b>délka vrhu:</b> <span class="f">D = v<sub>0</sub>t<sub>D</sub> = ${N(v0*Tf)} m</span></p>
+<p><b>V čase ${p.T} s:</b> <span class="f">y = ${p.h} − ½·9,81·${p.T}² = ${N(y)} m, x = ${N(v0*p.T)} m, v<sub>y</sub> = ${N(vy)} m/s</span></p>
+<p class="f">v = √(v<sub>0</sub>² + v<sub>y</sub>²) = ${N(v)} m/s, &nbsp; E<sub>k</sub> = ½mv² = ${N(p.m*v*v/2)} J, &nbsp; E<sub>p</sub> = mgy = ${N(p.m*g*y)} J</p>
+${figs([fig(throwFig(v0,0,p.h,Tf,[[v0*p.T,y,p.T+' s'],[v0*Tf,0,'D','l']]),'vodorovný vrh')])}`}});
+
+/* ---------- 41 – 44 ---------- */
+def({n:41,t:'dyn',p:{m:5,a:3,b:5,T:4},rnd:()=>({m:Ri(1,20),a:Ri(1,6),b:Ri(1,20),T:Ri(1,5)}),
+text:p=>`Na těleso o m = ${p.m} kg působí síla <span class="f">F = ${poly([[p.a,T2],[p.b,'']])}</span>. Určete zrychlení v ${p.T} s a typ pohybu.`,
+ans:p=>[{l:'a =',v:(p.a*p.T**2+p.b)/p.m,u:'m/s²'},{l:'typ:',sel:TYPY,v:3}],
+sol:p=>`<p class="f">a(t) = F(t)/m = (${poly([[p.a,T2],[p.b,'']])})/${p.m}</p><p class="f">a(${p.T}) = (${p.a}·${p.T**2} + ${p.b})/${p.m} = ${N((p.a*p.T**2+p.b)/p.m)} m/s²</p><p>Zrychlení se s časem mění (roste) → pohyb je <b>nerovnoměrně zrychlený</b>.</p>`});
+def({n:42,t:'dyn',p:{m:8,a:3,b:5,c:2,T:2},rnd:()=>({m:Ri(1,20),a:Ri(1,6),b:Ri(1,9),c:Ri(0,9),T:Ri(1,5)}),
+text:p=>`Těleso o m = ${p.m} kg se pohybuje s rychlostí <span class="f">v = ${poly([[p.a,T2],[p.b,T1],[p.c,'']])}</span>. Určete sílu působící na těleso v ${p.T} s.`,
+ans:p=>[{l:'F =',v:p.m*(2*p.a*p.T+p.b),u:'N'}],
+sol:p=>`<p class="f">a = dv/dt = ${poly([[2*p.a,T1],[p.b,'']])} ⇒ a(${p.T}) = ${2*p.a*p.T+p.b} m/s²</p><p class="f">F = ma = ${p.m}·${2*p.a*p.T+p.b} = ${N(p.m*(2*p.a*p.T+p.b))} N</p>`});
+def({n:43,t:'dyn',p:{m:5,a:4,b:-2,c:8,d:1,T:2},rnd:()=>({m:Ri(1,20),a:Ri(1,8),b:Ri(-5,5),c:Ri(2,12),d:Ri(1,3),T:Ri(1,3)}),
+text:p=>`Pohyb tělesa (${p.m} kg) je dán rovnicemi <span class="f">x(t) = ${poly([[p.a,T1],[p.b,'']])}, &nbsp; y(t) = ${poly([[p.c,T1],[-p.d,T2]])}</span>. Jaká síla působí na těleso? Určete polohu, rychlost a zrychlení v ${p.T} s.`,
+ans:p=>{const t=p.T;return[{l:'F<sub>x</sub> =',v:0,u:'N'},{l:'F<sub>y</sub> =',v:-2*p.d*p.m,u:'N'},{l:'x =',v:p.a*t+p.b,u:'m'},{l:'y =',v:p.c*t-p.d*t*t,u:'m'},{l:'v<sub>x</sub> =',v:p.a,u:'m/s'},{l:'v<sub>y</sub> =',v:p.c-2*p.d*t,u:'m/s'},{l:'a<sub>x</sub> =',v:0,u:'m/s²'},{l:'a<sub>y</sub> =',v:-2*p.d,u:'m/s²'}]},
+sol:p=>{const t=p.T;return `<p class="f">v⃗ = (${p.a}; ${poly([[p.c,''],[-2*p.d,T1]])}), &nbsp; a⃗ = (0; ${-2*p.d}) m/s² – konstantní</p>
+<p class="f">F⃗ = m a⃗ = ${p.m}·(0; ${-2*p.d}) = (0; ${-2*p.d*p.m}) N, &nbsp; |F| = ${2*p.d*p.m} N</p><p>Síla je konstantní a míří ve směru −y (pohyb je obdobou šikmého vrhu).</p>
+<p>V čase ${t} s: <span class="f">r⃗ = ${V([p.a*t+p.b,p.c*t-p.d*t*t])} m, v⃗ = ${V([p.a,p.c-2*p.d*t])} m/s (|v| = ${N(Math.hypot(p.a,p.c-2*p.d*t))} m/s), a⃗ = ${V([0,-2*p.d])} m/s²</span></p>`}});
+const INCL=`<svg class="plot" viewBox="0 0 340 230" width="340" height="230"><defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs>
+<polygon points="20,210 320,210 320,40" fill="#f1f3f5" stroke="#555"/><path d="M80 210 A60 60 0 0 0 72.2 180.5" fill="none" stroke="#333"/><text x="86" y="203" font-size="13">α</text>
+<g transform="translate(182,99) rotate(-29.5)"><rect x="-26" y="-17" width="52" height="34" fill="#d9f0ee" stroke="#008a82"/></g>
+<g stroke-width="2" marker-end="url(#a3)"><line x1="182" y1="99" x2="182" y2="184" stroke="#c2185b"/><line x1="182" y1="99" x2="130" y2="128" stroke="#3b5bdb"/><line x1="182" y1="99" x2="218" y2="163" stroke="#3b5bdb"/><line x1="182" y1="99" x2="146" y2="35" stroke="#3b5bdb"/><line x1="205" y1="86" x2="244" y2="64" stroke="#e67700"/></g>
+<text x="188" y="196" font-size="12" fill="#c2185b">G = mg</text><text x="124" y="138" font-size="12" fill="#3b5bdb" text-anchor="end">G∥ = mg sin α</text><text x="224" y="172" font-size="12" fill="#3b5bdb">G⊥ = mg cos α</text><text x="140" y="30" font-size="12" fill="#3b5bdb" text-anchor="end">N = mg cos α</text><text x="248" y="60" font-size="12" fill="#e67700">F<tspan font-size="9" dy="3">t</tspan><tspan dy="-3"> = f·mg cos α</tspan></text></svg>`;
+def({n:44,t:'dyn',text:()=>`Pohyb tělesa po nakloněné rovině se třením: načrtněte obrázek, vyznačte síly a uveďte jejich hodnoty pomocí úhlu, hmotnosti, g a koeficientu tření.`,
+theory:()=>`${figs([fig(INCL,'těleso klouže dolů po nakloněné rovině')])}
+<ul><li>tíhová síla <span class="f">G = mg</span> (svisle dolů), rozložíme ji na</li>
+<li>složku rovnoběžnou s rovinou (pohybovou) <span class="f">G<sub>∥</sub> = F<sub>p</sub> = mg sin α</span></li>
+<li>složku kolmou k rovině (tlakovou) <span class="f">G<sub>⊥</sub> = mg cos α</span></li>
+<li>reakce podložky (normálová síla) <span class="f">N = mg cos α</span> – ruší se s G<sub>⊥</sub></li>
+<li>třecí síla proti směru pohybu <span class="f">F<sub>t</sub> = f·N = f·mg cos α</span></li></ul>
+<p>Pohybová rovnice (pohyb dolů): <span class="f">ma = mg sin α − f mg cos α ⇒ a = g(sin α − f cos α)</span>. Těleso se samo rozjede, jen když tg α &gt; f.</p>`});
+
+/* ---------- 45 – 51 ---------- */
+def({n:45,t:'en',text:()=>`Jak je definována práce a jaká je její jednotka? Jak je definovaný impuls síly a jaká je jeho jednotka? Vyjádřete tyto jednotky pomocí základních jednotek soustavy SI.`,
+theory:()=>`<p><b>Práce:</b> <span class="f">W = ∫ F⃗ · dr⃗</span> (skalární součin síly a posunutí); pro konstantní sílu <span class="f">W = F s cos α</span>, kde α je úhel mezi silou a posunutím.</p>
+<p>Jednotka <b>joule</b>: <span class="f">1 J = 1 N·m = 1 kg·m²·s<sup>−2</sup></span></p>
+<p><b>Impuls síly:</b> <span class="f">I⃗ = ∫ F⃗ dt</span>; pro konstantní sílu <span class="f">I⃗ = F⃗ Δt</span>. Je roven změně hybnosti <span class="f">I⃗ = Δp⃗</span>.</p>
+<p>Jednotka: <span class="f">1 N·s = 1 kg·m·s<sup>−1</sup></span></p>`});
+def({n:46,t:'en',p:{m:8,h:40},rnd:()=>({m:Ri(1,50),h:Ri(2,100)}),
+text:p=>`Jaká práce byla vykonána při zvednutí tělesa o ${p.m} kg do výšky ${p.h} m? Uveďte definici práce a její jednotku.`,
+ans:p=>[{l:'W =',v:p.m*g*p.h,u:'J'}],
+sol:p=>`<p>Zvedáme rovnoměrně silou rovnou tíze F = mg, ve směru posunutí:</p><p class="f">W = F·s = mgh = ${p.m}·9,81·${p.h} = ${N(p.m*g*p.h)} J</p><p>Definice: <span class="f">W = ∫F⃗·dr⃗</span>, pro konstantní sílu <span class="f">W = Fs cos α</span>; jednotka 1 J = 1 N·m = 1 kg·m²·s<sup>−2</sup>.</p>`});
+def({n:47,t:'en',p:{m:1.8,F:85,v:8},rnd:()=>({m:Rd(.3,2.5,.1),F:Ri(20,200),v:Ri(3,30)}),
+text:p=>`Hráč kopne míč (${N(p.m)} kg) silou ${p.F} N a míč získá rychlost ${p.v} m/s. Jak dlouho trvalo kopnutí?`,
+ans:p=>[{l:'Δt =',v:p.m*p.v/p.F,u:'s'}],
+sol:p=>`<p>Impuls síly je roven změně hybnosti (míč byl na začátku v klidu):</p><p class="f">F Δt = m v − 0 ⇒ Δt = mv/F = ${N(p.m)}·${p.v}/${p.F} = ${N(p.m*p.v/p.F)} s</p>`});
+def({n:48,t:'en',text:()=>`Zákon zachování hybnosti.`,
+theory:()=>`<p>V <b>izolované soustavě</b> těles (výslednice vnějších sil je nulová) je celková hybnost soustavy konstantní:</p>
+<p class="f">Σ p⃗<sub>i</sub> = m<sub>1</sub>v⃗<sub>1</sub> + m<sub>2</sub>v⃗<sub>2</sub> + … = konst.</p>
+<p>Odvození: z 2. Newtonova zákona <span class="f">dp⃗/dt = F⃗<sub>vnější</sub></span>; vnitřní síly se díky 3. zákonu (akce a reakce) navzájem ruší. Je-li F⃗<sub>vnější</sub> = 0, je dp⃗/dt = 0, tedy p⃗ = konst.</p>
+<p>Příklady: srážky těles (<span class="f">m<sub>1</sub>v<sub>1</sub> + m<sub>2</sub>v<sub>2</sub> = m<sub>1</sub>v<sub>1</sub>′ + m<sub>2</sub>v<sub>2</sub>′</span>), zpětný ráz pušky, reaktivní (raketový) pohon.</p>`});
+def({n:49,t:'en',p:{m:8,a:3,T:5},rnd:()=>({m:Ri(1,30),a:Ri(1,8),T:Ri(1,10)}),
+text:p=>`Těleso o m = ${p.m} kg z klidu zrychluje se zrychlením a = ${p.a} m s<sup>−2</sup>. Určete hybnost v ${p.T} s.`,
+ans:p=>[{l:'p =',v:p.m*p.a*p.T,u:'kg·m/s'}],
+sol:p=>`<p class="f">v = at = ${p.a}·${p.T} = ${p.a*p.T} m/s, &nbsp; p = mv = ${p.m}·${p.a*p.T} = ${p.m*p.a*p.T} kg·m/s</p><p>(Také: p = F·t = ma·t.)</p>`});
+def({n:50,t:'en',p:{P0:800,eta:75},rnd:()=>({P0:Ri(2,40)*100,eta:Ri(10,19)*5}),
+text:p=>`Stroj má příkon ${p.P0} W. Jaký je výkon při účinnosti ${p.eta} %? Definujte výkon, účinnost a jejich jednotky.`,
+ans:p=>[{l:'P =',v:p.P0*p.eta/100,u:'W'}],
+sol:p=>`<p class="f">η = P/P<sub>0</sub> ⇒ P = η P<sub>0</sub> = ${N(p.eta/100)}·${p.P0} = ${N(p.P0*p.eta/100)} W</p><p>Ztráty: ${N(p.P0*(1-p.eta/100))} W.</p>
+<p><b>Výkon</b> je práce vykonaná za jednotku času: <span class="f">P = dW/dt</span> (průměrný P = W/t; také P = F⃗·v⃗). Jednotka watt: <span class="f">1 W = 1 J/s = 1 kg·m²·s<sup>−3</sup></span>.</p>
+<p><b>Účinnost</b> je poměr výkonu (užitečné práce) a příkonu (dodané energie): <span class="f">η = P/P<sub>0</sub> = W/E</span>; bezrozměrná, často v %; vždy η &lt; 1 (100 %).</p>`});
+def({n:51,t:'en',p:{},text:()=>`Kolik joulů je 1 kWh a 1 MWh?`,hint:'Zápis např. 3600000, 3,6e6 nebo 3,6·10^6.',
+ans:()=>[{l:'1 kWh =',v:3.6e6,u:'J'},{l:'1 MWh =',v:3.6e9,u:'J'}],
+sol:()=>`<p class="f">1 kWh = 1000 W · 3600 s = 3,6·10<sup>6</sup> J = 3,6 MJ</p><p class="f">1 MWh = 10<sup>6</sup> W · 3600 s = 3,6·10<sup>9</sup> J = 3,6 GJ</p>`});
+
+/* ---------- 52 – 56 rotace ---------- */
+const cross=(r,F)=>[r[1]*F[2]-r[2]*F[1],r[2]*F[0]-r[0]*F[2],r[0]*F[1]-r[1]*F[0]];
+const rv=()=>[Ri(-9,9),Ri(-9,9),Ri(-9,9)];
+def({n:52,t:'rot',p:{F:[12,-8,24],r:[7,4,2]},rnd:()=>({F:[Ri(-15,30),Ri(-15,30),Ri(-15,30)],r:rv()}),
+text:p=>`Síla <span class="f">F⃗ = ${V(p.F)} N</span> působí na rameni <span class="f">r⃗ = ${V(p.r)} m</span>. Určete moment síly <span class="f">M⃗</span>.`,
+hint:'Určete i velikost momentu.',
+ans:p=>{const M=cross(p.r,p.F);return[{l:'M<sub>x</sub> =',v:M[0],u:'N·m'},{l:'M<sub>y</sub> =',v:M[1],u:'N·m'},{l:'M<sub>z</sub> =',v:M[2],u:'N·m'},{l:'|M| =',v:len(M),u:'N·m'}]},
+sol:p=>{const r=p.r,F=p.F,M=cross(r,F),b=x=>x<0?'('+N(x)+')':N(x);return `<p>Moment síly je vektorový součin <span class="f">M⃗ = r⃗ × F⃗</span> (pořadí je důležité!):</p>
+<p class="f">M<sub>x</sub> = r<sub>y</sub>F<sub>z</sub> − r<sub>z</sub>F<sub>y</sub> = ${b(r[1])}·${b(F[2])} − ${b(r[2])}·${b(F[1])} = ${N(M[0])}</p>
+<p class="f">M<sub>y</sub> = r<sub>z</sub>F<sub>x</sub> − r<sub>x</sub>F<sub>z</sub> = ${b(r[2])}·${b(F[0])} − ${b(r[0])}·${b(F[2])} = ${N(M[1])}</p>
+<p class="f">M<sub>z</sub> = r<sub>x</sub>F<sub>y</sub> − r<sub>y</sub>F<sub>x</sub> = ${b(r[0])}·${b(F[1])} − ${b(r[1])}·${b(F[0])} = ${N(M[2])}</p>
+<p class="f">M⃗ = ${V(M)} N·m, &nbsp; |M| = √(${M.map(x=>N(x*x)).join(' + ')}) = ${N(len(M))} N·m</p>`}});
+def({n:53,t:'rot',p:{R:40,H:90,m:15,f:4,M:25},rnd:()=>({R:Ri(10,60),H:Ri(20,150),m:Ri(5,50),f:Ri(1,10),M:Ri(5,50)}),
+text:p=>`Válec o poloměru ${p.R} cm, výšce ${p.H} cm a hmotnosti ${p.m} kg se otáčí (kolem své osy) s frekvencí ${p.f} Hz. Určete dobu, za kterou se zastaví působením třecího momentu ${p.M} N m.`,
+ans:p=>{const J=p.m*(p.R/100)**2/2,w=2*PI*p.f;return[{l:'J =',v:J,u:'kg·m²'},{l:'t =',v:w*J/p.M,u:'s'}]},
+sol:p=>{const R=p.R/100,J=p.m*R*R/2,w=2*PI*p.f,e=p.M/J;return `<p>Moment setrvačnosti válce vzhledem k jeho ose (výška na něj nemá vliv): <span class="f">J = ½mR² = ½·${p.m}·${N(R)}² = ${N(J)} kg·m²</span></p>
+<p class="f">ω<sub>0</sub> = 2πf = ${N(w)} rad/s</p><p>Pohybová rovnice rotace: <span class="f">M = Jε ⇒ ε = M/J = ${p.M}/${N(J)} = ${N(e)} rad/s²</span> (zpomalení)</p>
+<p class="f">t = ω<sub>0</sub>/ε = ω<sub>0</sub>J/M = ${N(w*J/p.M)} s</p>`}});
+def({n:54,t:'rot',p:{R:70,m:25,v:8},rnd:()=>({R:Ri(10,100),m:Ri(2,40),v:Ri(1,15)}),
+text:p=>`Určete kinetickou energii koule o poloměru ${p.R} cm a hmotnosti ${p.m} kg, která se kutálí rychlostí ${p.v} m/s.`,
+ans:p=>[{l:'E<sub>k</sub> =',v:.7*p.m*p.v**2,u:'J'}],
+sol:p=>{const R=p.R/100,J=.4*p.m*R*R,w=p.v/R;return `<p>Kutálení = posuvný pohyb těžiště + rotace kolem těžiště (bez prokluzu v = ωR):</p>
+<p class="f">E<sub>k</sub> = ½mv² + ½Jω², &nbsp; J<sub>koule</sub> = ⅖mR², &nbsp; ω = v/R</p>
+<p class="f">E<sub>k</sub> = ½mv² + ½·⅖mR²·v²/R² = ½mv² + ⅕mv² = <sup>7</sup>⁄<sub>10</sub> mv²</p>
+<p>Číselně: posuvná <span class="f">½·${p.m}·${p.v}² = ${N(p.m*p.v**2/2)} J</span>, rotační <span class="f">½·${N(J)}·${N(w)}² = ${N(J*w*w/2)} J</span>, celkem <span class="f">E<sub>k</sub> = ${N(.7*p.m*p.v**2)} J</span> (poloměr se vykrátí).</p>`}});
+def({n:55,t:'rot',p:{l:4,m:50,q:4},rnd:()=>({l:Ri(1,8),m:Ri(5,80),q:pick([3,4,5,6])}),
+text:p=>`Tyč délky ${p.l} m a hmotnosti ${p.m} kg se otáčí kolem osy v 1/${p.q} délky tyče. Určete moment setrvačnosti tyče, pokud znáte těžišťový moment setrvačnosti.`,
+ans:p=>{const J0=p.m*p.l**2/12,d=p.l/2-p.l/p.q;return[{l:'J<sub>0</sub> =',v:J0,u:'kg·m²'},{l:'d =',v:d,u:'m'},{l:'J =',v:J0+p.m*d*d,u:'kg·m²'}]},
+sol:p=>{const J0=p.m*p.l**2/12,d=p.l/2-p.l/p.q;return `<p>Těžišťový moment setrvačnosti tyče (osa kolmá k tyči středem): <span class="f">J<sub>0</sub> = <sup>1</sup>⁄<sub>12</sub> ml² = ${p.m}·${p.l}²/12 = ${N(J0)} kg·m²</span></p>
+<p>Osa je ve vzdálenosti l/${p.q} = ${N(p.l/p.q)} m od konce, tedy od těžiště (středu) <span class="f">d = l/2 − l/${p.q} = ${N(d)} m</span>.</p>
+<p>Steinerova věta: <span class="f">J = J<sub>0</sub> + md² = ${N(J0)} + ${p.m}·${N(d)}² = ${N(J0+p.m*d*d)} kg·m²</span></p>`}});
+def({n:56,t:'rot',text:()=>`Moment síly, kinetická energie rotačního pohybu, Steinerova věta.`,
+theory:()=>`<p><b>Moment síly</b> vzhledem k bodu O: <span class="f">M⃗ = r⃗ × F⃗</span>, kde r⃗ je polohový vektor působiště síly vůči O. Velikost <span class="f">M = rF sin α = F·d</span> (d – rameno síly, kolmá vzdálenost vektorové přímky síly od osy). Jednotka N·m = kg·m²·s<sup>−2</sup>. Pohybová rovnice rotace: <span class="f">M = Jε</span> (obecně M⃗ = dL⃗/dt).</p>
+<p><b>Kinetická energie rotačního pohybu:</b> <span class="f">E<sub>k</sub> = ½Jω²</span>, kde <span class="f">J = Σ m<sub>i</sub>r<sub>i</sub>² = ∫r² dm</span> je moment setrvačnosti vzhledem k ose otáčení. (Plyne z E<sub>k</sub> = Σ ½m<sub>i</sub>v<sub>i</sub>² a v<sub>i</sub> = ωr<sub>i</sub>.) Pro valení: <span class="f">E<sub>k</sub> = ½mv<sub>T</sub>² + ½J<sub>T</sub>ω²</span>.</p>
+<p><b>Steinerova věta:</b> moment setrvačnosti vzhledem k ose rovnoběžné s osou procházející těžištěm, ve vzdálenosti d: <span class="f">J = J<sub>T</sub> + md²</span>. Nejmenší moment setrvačnosti je vždy vzhledem k ose těžištěm.</p>`});
+
+/* =================== stav a vyhodnocení =================== */
+const ST={};      /* stav karet: klíč -> {P,p,ans,checked,sol} */
+const byN=n=>PR.find(x=>x.n===n);
+function mk(key,P,p){ST[key]={P,p:p||P.p,ans:P.theory?[]:P.ans(p||P.p).map(()=>''),checked:false,sol:false};return ST[key]}
+function parse(s){s=String(s).trim().replace(/\s/g,'').replace(/[−–]/g,'-').replace(',','.').replace(/[·×*]10\^?\(?(-?\d+)\)?/,'e$1').replace(/^10\^/,'1e');if(!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s))return NaN;return Number(s)}
+function fOK(f,val){if(f.sel)return val!==''&&Number(val)===f.v;let x=parse(val);if(isNaN(x))return false;
+ const ok=y=>Math.abs(y-f.v)<=Math.max(Math.abs(f.v)*0.015,0.006);return ok(x)||(f.abs&&ok(-x))}
+const fields=st=>st.P.ans(st.p);
+const right=st=>fields(st).map((f,k)=>fOK(f,st.ans[k]));
+const frac=st=>{const r=right(st);return r.filter(Boolean).length/r.length};
+
+function inputs(key,lock,show){const st=ST[key],fs=fields(st);
+ return fs.map((f,k)=>{const r=show&&fOK(f,st.ans[k]),cls=show?(r?'right':'wrong'):'';
+  const ctrl=f.sel?`<select class="${cls}" ${lock?'disabled':''} onchange="ST['${key}'].ans[${k}]=this.value"><option value="">— vyberte —</option>${f.sel.map((o,i)=>`<option value="${i}" ${String(st.ans[k])===String(i)?'selected':''}>${o}</option>`).join('')}</select>`
+   :`<input type="text" inputmode="decimal" autocomplete="off" class="${cls}" value="${String(st.ans[k]).replace(/"/g,'&quot;')}" ${lock?'disabled':''} oninput="ST['${key}'].ans[${k}]=this.value;mark()" onkeydown="if(event.key==='Enter')chk('${key}')">`;
+  return `<div class="row"><span class="l">${f.l}</span>${ctrl}${f.u?`<span>${f.u}</span>`:''}${show?`<span class="${r?'ok':'bad'} mark">${r?'✓':'✗'}</span>`:''}</div>`}).join('');
+}
+function card(key,mode){const st=ST[key],P=st.P,p=st.p;
+ const head=`<div class="qh"><h2>Příklad <b>${P.n}</b></h2><span class="tag">${TOP[P.t]}</span>${P.theory?'<span class="tag">teorie</span>':''}${st.checked&&!P.theory?(()=>{const f=frac(st);return `<span class="${f===1?'ok':'bad'}">${f===1?'Správně':f>0?'Částečně správně':'Špatně'}</span>`})():''}${p!==P.p&&P.p?'<span class="tag">jiné hodnoty</span>':''}</div>`;
+ let h=`<section class="q" id="${key}">${head}<div class="qt">${P.text(p)}</div>`;
+ if(P.theory){
+  h+=`<button class="btn o ${st.sol?'on':''}" onclick="tog('${key}')">${st.sol?'Skrýt odpověď':'Zobrazit odpověď'}</button>`;
+  if(st.sol)h+=`<div class="sol">${P.theory(p)}</div>`;
+ }else{
+  if(P.hint)h+=`<div class="hint">${typeof P.hint==='function'?P.hint(p):P.hint.replace('T s',(p.T??'')+' s')}</div>`;
+  const lock=mode==='review';
+  h+=inputs(key,lock,st.checked||lock);
+  if(mode==='list'){
+   h+=`<div style="margin-top:10px"><button class="btn o" onclick="chk('${key}')">Zkontrolovat</button><button class="btn o ${st.sol?'on':''}" onclick="tog('${key}')">${st.sol?'Skrýt řešení':'Zobrazit řešení'}</button>${P.rnd?`<button class="btn o" onclick="nove('${key}')">↻ Jiné hodnoty</button>`:''}${P.rnd&&p!==P.p?`<button class="btn o" onclick="puv('${key}')">Původní zadání</button>`:''}</div>`;
+  }else if(mode==='test'){
+   h+=`<div style="margin-top:10px"><button class="btn g" onclick="chk('${key}')">Zkontrolovat</button></div>`;
+  }
+  if(st.sol||mode==='review')h+=`<div class="sol"><b>Řešení</b>${P.sol(p)}${res(fields(st))}</div>`;
+ }
+ return h+'</section>';
+}
+function upd(key){const el=document.getElementById(key);if(el)el.outerHTML=card(key,key[0]==='L'?'list':(T.done?'review':'test'));if(key[0]==='T')navUpd()}
+function chk(key){ST[key].checked=true;upd(key)}
+function tog(key){ST[key].sol=!ST[key].sol;upd(key)}
+function nove(key){const st=ST[key];mk(key,st.P,st.P.rnd());upd(key)}
+function puv(key){const st=ST[key];mk(key,st.P);upd(key)}
+function mark(){if(T.on&&!T.done)navUpd()}
+
+/* =================== test =================== */
+const T={on:false,keys:[],cur:0,done:false,left:0,t:null,start:null,end:null,count:8,mins:40};
+const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+const fmtD=d=>d.toLocaleString('cs',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+function newTest(){
+ const pool=PR.filter(P=>!P.theory&&P.rnd&&(view.top==='all'||P.t===view.top));
+ const sel=shuf(pool).slice(0,Math.min(T.count,pool.length)).sort((a,b)=>a.n-b.n);
+ Object.keys(ST).filter(k=>k[0]==='T').forEach(k=>delete ST[k]);
+ T.keys=sel.map((P,i)=>{mk('T'+i,P,P.rnd());return 'T'+i});
+ T.on=true;T.cur=0;T.done=false;T.left=T.mins*60;T.start=new Date();
+ clearInterval(T.t);T.t=setInterval(()=>{T.left--;if(T.left<=0)finish();else{const e=document.getElementById('tm');if(e)e.textContent=fmt(T.left)}},1000);
+ view.tab='test';render();
+}
+function finish(){clearInterval(T.t);T.done=true;T.end=new Date();render();window.scrollTo(0,0)}
+function navHTML(){return `<aside class="nav"><h3>Navigace testu</h3><div class="grid">${T.keys.map((k,i)=>{const st=ST[k];
+ const filled=st.ans.some(x=>x!=='');let cls;
+ if(T.done){const f=frac(st);cls=f===1?'r':f>0?'h':'w'}else cls=(i===T.cur?'cur ':'')+(filled?'done':'');
+ return `<button class="${cls}" onclick="go(${i})">${i+1}</button>`}).join('')}</div>
+ <p style="margin-top:16px">${T.done?`<a onclick="T.on=false;render()">Zpět na úvod testu</a>`:`<a onclick="if(confirm('Opravdu dokončit test?'))finish()">Konec testu…</a>`}</p></aside>`}
+function navUpd(){const n=document.querySelector('.nav');if(n)n.outerHTML=navHTML()}
+function go(i){if(T.done){document.getElementById(T.keys[i]).scrollIntoView({behavior:'smooth'})}else{T.cur=i;render()}}
+
+/* =================== teorie =================== */
+const THEORY=`
+<div class="th"><h3>Kinematika přímočarého pohybu</h3>
+<p class="f">v = dx/dt, &nbsp; a = dv/dt = d²x/dt²; &nbsp; obráceně x = ∫v dt, v = ∫a dt (integrační konstanty = počáteční podmínky x<sub>0</sub>, v<sub>0</sub>)</p>
+<table class="t"><tr><th>pohyb</th><th>a</th><th>v(t)</th><th>x(t)</th></tr>
+<tr><td>rovnoměrný</td><td>0</td><td>v<sub>0</sub></td><td>x<sub>0</sub> + v<sub>0</sub>t</td></tr>
+<tr><td>rovnoměrně zrychlený</td><td>konst.</td><td>v<sub>0</sub> + at</td><td>x<sub>0</sub> + v<sub>0</sub>t + ½at²</td></tr>
+<tr><td>rovnoměrně zpomalený</td><td>−a</td><td>v<sub>0</sub> − at</td><td>x<sub>0</sub> + v<sub>0</sub>t − ½at²</td></tr></table>
+<div class="ex"><b>Užitečné vztahy bez času:</b> <span class="f">v² − v<sub>0</sub>² = 2as</span>; brzdění do zastavení <span class="f">t = v<sub>0</sub>/a, s = v<sub>0</sub>²/(2a)</span>; rozjezd z klidu <span class="f">s = ½at² = vt/2</span>.<br><b>Převod:</b> km/h ÷ 3,6 = m/s.</div>
+<p>Typ pohybu poznáme ze zrychlení: a = 0 → rovnoměrný; a = konst. → rovnoměrně zrychlený/zpomalený; a závisí na t → nerovnoměrně zrychlený.</p></div>
+
+<div class="th"><h3>Pohyb v rovině a prostoru</h3>
+<p class="f">r⃗(t) = x(t)<b><i>i</i></b> + y(t)<b><i>j</i></b> + z(t)<b><i>k</i></b>, &nbsp; v⃗ = dr⃗/dt = (ẋ; ẏ; ż), &nbsp; a⃗ = dv⃗/dt</p>
+<p class="f">|v| = √(v<sub>x</sub>² + v<sub>y</sub>² + v<sub>z</sub>²)</p>
+<p><b>Trajektorie:</b> z jedné rovnice vyjádříme t a dosadíme do druhé (vyloučení parametru).</p>
+<p>Derivace: <span class="f">(tⁿ)′ = n tⁿ⁻¹, (sin ωt)′ = ω cos ωt, (cos ωt)′ = −ω sin ωt</span>, konstanta → 0.</p></div>
+
+<div class="th"><h3>Pohyb po kružnici</h3>
+<p class="f">φ – úhlová dráha [rad], &nbsp; ω = dφ/dt [rad/s], &nbsp; ε = dω/dt [rad/s²]</p>
+<p class="f">ω = 2π/T = 2πf, &nbsp; f [Hz] = (ot/min)/60, &nbsp; v = ωR</p>
+<p class="f">a<sub>t</sub> = dv/dt = εR (tečné – mění velikost rychlosti), &nbsp; a<sub>n</sub> = v²/R = ω²R (normálové, dostředivé – mění směr), &nbsp; a = √(a<sub>t</sub>² + a<sub>n</sub>²)</p>
+<p>Rovnoměrný pohyb po kružnici: ε = 0, a<sub>t</sub> = 0, a = a<sub>n</sub>. Rovnoměrně zrychlený: <span class="f">ω = ω<sub>0</sub> + εt, φ = ω<sub>0</sub>t + ½εt²</span>.</p>
+<p>Polohový vektor: <span class="f">r⃗ = (R cos ωt; R sin ωt)</span>, trajektorie <span class="f">x² + y² = R²</span>.</p></div>
+
+<div class="th"><h3>Dynamika</h3>
+<p>Newtonovy zákony: setrvačnost; <span class="f">F⃗ = dp⃗/dt = ma⃗</span>; akce a reakce.</p>
+<p class="f">třecí síla F<sub>t</sub> = f·N (na vodorovné podložce N = mg)</p>
+<p>Vodorovné tažení se třením: <span class="f">a = (F − f mg)/m</span>. Síla z rychlosti: <span class="f">F = m·dv/dt</span>; zrychlení ze síly: <span class="f">a = F/m</span>.</p>
+<p><b>Nakloněná rovina:</b> <span class="f">F<sub>p</sub> = mg sin α, N = mg cos α, F<sub>t</sub> = f mg cos α, a = g(sin α − f cos α)</span>; bez tření a = g sin α, délka roviny l = h/sin α, koncová rychlost v = √(2gh).</p>
+<p><b>Setrvačné síly</b> zavádíme v neinerciálních soustavách: <span class="f">F⃗<sub>s</sub> = −ma⃗<sub>0</sub></span>, odstředivá <span class="f">mω²r</span>, Coriolisova <span class="f">−2mω⃗ × v⃗′</span>.</p></div>
+
+<div class="th"><h3>Pád a vrhy (g = 9,81 m/s²)</h3>
+<table class="t"><tr><th>pohyb</th><th>vztahy</th></tr>
+<tr><td>volný pád</td><td class="f">v = gt, s = ½gt², doba pádu t = √(2h/g), v<sub>dopad</sub> = √(2gh)</td></tr>
+<tr><td>vrh svislý vzhůru</td><td class="f">v = v<sub>0</sub> − gt, h = v<sub>0</sub>t − ½gt², H = v<sub>0</sub>²/(2g), v<sub>0</sub> = √(2gH)</td></tr>
+<tr><td>vrh vodorovný</td><td class="f">x = v<sub>0</sub>t, y = h − ½gt², v = √(v<sub>0</sub>² + (gt)²), D = v<sub>0</sub>√(2h/g)</td></tr>
+<tr><td>vrh šikmý</td><td class="f">x = v<sub>0</sub>t cos α, y = v<sub>0</sub>t sin α − ½gt², H = v<sub>0</sub>² sin²α/(2g), D = v<sub>0</sub>² sin 2α/g, T = 2v<sub>0</sub> sin α/g</td></tr></table>
+<p>Energie v čase t: <span class="f">E<sub>k</sub> = ½mv², E<sub>p</sub> = mgh</span>; jejich součet je konstantní (zákon zachování mechanické energie) – dobrá kontrola výsledku.</p></div>
+
+<div class="th"><h3>Práce, výkon, energie, hybnost</h3>
+<table class="t"><tr><th>veličina</th><th>vztah</th><th>jednotka</th></tr>
+<tr><td>práce</td><td class="f">W = ∫F⃗·dr⃗ = Fs cos α</td><td>J = N·m = kg·m²·s<sup>−2</sup></td></tr>
+<tr><td>výkon</td><td class="f">P = dW/dt = F·v</td><td>W = J/s = kg·m²·s<sup>−3</sup></td></tr>
+<tr><td>účinnost</td><td class="f">η = P/P<sub>0</sub></td><td>– (%)</td></tr>
+<tr><td>kinetická energie</td><td class="f">E<sub>k</sub> = ½mv²</td><td>J</td></tr>
+<tr><td>potenciální energie</td><td class="f">E<sub>p</sub> = mgh</td><td>J</td></tr>
+<tr><td>hybnost</td><td class="f">p⃗ = mv⃗</td><td>kg·m·s<sup>−1</sup></td></tr>
+<tr><td>impuls síly</td><td class="f">I⃗ = ∫F⃗ dt = FΔt = Δp⃗</td><td>N·s = kg·m·s<sup>−1</sup></td></tr></table>
+<p><b>Zákon zachování hybnosti:</b> v izolované soustavě Σ p⃗ = konst. &nbsp; <b>1 kWh = 3,6·10<sup>6</sup> J</b>, 1 MWh = 3,6·10<sup>9</sup> J.</p></div>
+
+<div class="th"><h3>Rotace tuhého tělesa</h3>
+<p class="f">M⃗ = r⃗ × F⃗ = (r<sub>y</sub>F<sub>z</sub> − r<sub>z</sub>F<sub>y</sub>; r<sub>z</sub>F<sub>x</sub> − r<sub>x</sub>F<sub>z</sub>; r<sub>x</sub>F<sub>y</sub> − r<sub>y</sub>F<sub>x</sub>), &nbsp; M = Fd</p>
+<p class="f">M = Jε, &nbsp; E<sub>k,rot</sub> = ½Jω², &nbsp; valení: E<sub>k</sub> = ½mv² + ½Jω² (v = ωR)</p>
+<table class="t"><tr><th>těleso (osa těžištěm)</th><th>J</th></tr>
+<tr><td>hmotný bod ve vzdálenosti r</td><td class="f">mr²</td></tr><tr><td>tenká obruč / dutý válec</td><td class="f">mR²</td></tr>
+<tr><td>plný válec, disk (podélná osa)</td><td class="f">½mR²</td></tr><tr><td>plná koule</td><td class="f">⅖mR²</td></tr>
+<tr><td>dutá koule (tenká slupka)</td><td class="f">⅔mR²</td></tr><tr><td>tenká tyč, osa kolmo středem</td><td class="f">1/12 ml²</td></tr><tr><td>tenká tyč, osa kolmo koncem</td><td class="f">⅓ml²</td></tr></table>
+<p><b>Steinerova věta:</b> <span class="f">J = J<sub>T</sub> + md²</span> (d – vzdálenost rovnoběžné osy od těžiště).</p>
+<div class="ex">Analogie posuvný ↔ rotační pohyb: s ↔ φ, v ↔ ω, a ↔ ε, m ↔ J, F ↔ M, p = mv ↔ L = Jω, ½mv² ↔ ½Jω².</div></div>`;
+
+/* =================== vykreslení =================== */
+const view={tab:'list',top:'all'};
+const app=document.getElementById('app');
+PR.forEach(P=>mk('L'+P.n,P));
+function tabs(){return `<div class="tabs">${[['list','Příklady (všech 56)'],['test','Náhodný test'],['theory','Přehled teorie']].map(([k,t])=>`<a class="${view.tab===k?'on':''}" onclick="view.tab='${k}';render()">${t}</a>`).join('')}</div>`}
+function filt(){return `<div class="filters">${[['all','Vše'],...Object.entries(TOP)].map(([k,t])=>`<button class="btn o ${view.top===k?'on':''}" onclick="view.top='${k}';render()">${t}</button>`).join('')}</div>`}
+function render(){
+ if(view.tab==='list'){
+  const list=PR.filter(P=>view.top==='all'||P.t===view.top);
+  app.innerHTML=tabs()+`<div class="info"><b>Vzorové příklady k zápočtové písemce</b> – zadání jsou převzatá z PDF. U výpočtů zadej výsledek a dej <i>Zkontrolovat</i>, u teoretických otázek si nejdřív odpověz sám a pak si ji zobraz. Tlačítkem <i>↻ Jiné hodnoty</i> dostaneš stejný typ příkladu s novými čísly.<br><span class="hint">Počítá se s g = 9,81 m/s². Desetinná čárka i tečka fungují, tolerance je 1,5 % (zaokrouhlování nevadí).</span></div>`+filt()+`<p class="cnt">${list.length} příkladů</p>`+list.map(P=>card('L'+P.n,'list')).join('');
+ }else if(view.tab==='theory'){
+  app.innerHTML=tabs()+THEORY;
+ }else if(!T.on){
+  const pool=PR.filter(P=>!P.theory&&P.rnd&&(view.top==='all'||P.t===view.top)).length;
+  app.innerHTML=tabs()+`<div class="info"><b>Náhodný test</b><br>Vybere se ${T.count} výpočetních příkladů ze sbírky, každý s nově vygenerovanými hodnotami. Po dokončení uvidíš hodnocení a celé řešení každého příkladu.</div>
+  <p>Téma testu:</p>${filt()}<p class="cnt">V tomto výběru je ${pool} typů příkladů.</p>
+  <p style="margin:18px 0">Počet příkladů: <select onchange="T.count=+this.value">${[5,8,10,15].map(n=>`<option ${n===T.count?'selected':''}>${n}</option>`).join('')}</select> &nbsp; Časový limit: <select onchange="T.mins=+this.value">${[20,40,60,90].map(n=>`<option value="${n}" ${n===T.mins?'selected':''}>${n} min</option>`).join('')}</select></p>
+  <button class="btn" onclick="newTest()">Pokus testu</button>
+  <p style="margin-top:28px">Každý příklad má 1 bod; při více výsledcích se body dělí podle počtu správných polí.</p>`;
+ }else if(!T.done){
+  const i=T.cur;
+  app.innerHTML=tabs()+`<div class="layout"><div><div style="text-align:right"><span class="timer">Zbývající čas <span id="tm">${fmt(T.left)}</span></span></div>${card(T.keys[i],'test')}
+  <div class="foot"><span>${i>0?`<button class="btn g" onclick="go(${i-1})">Předchozí stránka</button>`:''}</span><span>${i<T.keys.length-1?`<button class="btn" onclick="go(${i+1})">Další stránka</button>`:`<button class="btn" onclick="if(confirm('Opravdu dokončit test?'))finish()">Dokončit pokus</button>`}</span></div></div>${navHTML()}</div>`;
+ }else{
+  const sc=T.keys.reduce((s,k)=>s+frac(ST[k]),0),t=T.keys.length,dur=Math.round((T.end-T.start)/1000);
+  T.keys.forEach(k=>ST[k].checked=true);
+  app.innerHTML=tabs()+`<div class="layout"><div><table class="sum">
+  <tr><th>Stav</th><td>Dokončeno</td></tr><tr><th>Zahájení</th><td>${fmtD(T.start)}</td></tr><tr><th>Dokončeno</th><td>${fmtD(T.end)}</td></tr>
+  <tr><th>Trvání</th><td>${dur>=60?Math.floor(dur/60)+' min. '+dur%60+' sekund':dur+' sekund'}</td></tr>
+  <tr><th>Známka</th><td><b>${N(sc,2)}</b> z možných ${t} (<b>${Math.round(sc/t*100)}</b> %)</td></tr></table>
+  ${T.keys.map(k=>card(k,'review')).join('')}<div class="foot"><button class="btn" onclick="newTest()">Nový pokus</button></div></div>${navHTML()}</div>`;
+ }
+}
+render();
+</script>
+</body>
+</html>
