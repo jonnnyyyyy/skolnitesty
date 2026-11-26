@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Školní testy – výběr testu</title>
+<title>Školní testy</title>
 <style>
 :root{--teal:#00a79d;--tealD:#008a82;--bg:#f5f5f5;--ink:#1d2125;--grey:#6a737b}
 *{box-sizing:border-box}
 body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.5}
-a{color:var(--teal);text-decoration:none}
+a{color:var(--teal);text-decoration:none}a:hover{text-decoration:underline}
 header{background:var(--bg);padding:20px 8vw 18px}
 .crumbs{font-size:15px;color:var(--grey)}
 h1{margin:10px 0 0;font-size:34px;display:flex;align-items:center;gap:14px}
@@ -16,55 +16,84 @@ h1 i{width:38px;height:38px;border:2px solid #e91e8c;border-radius:6px;display:i
 main{padding:28px 8vw 60px}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
 .card{display:block;border:1px solid #ddd;border-radius:10px;padding:20px 22px;color:var(--ink);transition:.15s}
-.card:hover{border-color:var(--teal);box-shadow:0 2px 10px rgba(0,167,157,.15)}
+.card:hover{border-color:var(--teal);box-shadow:0 2px 10px rgba(0,167,157,.15);text-decoration:none}
 .card h2{margin:0 0 6px;font-size:21px;font-weight:600;color:var(--tealD)}
 .card p{margin:0;color:var(--grey);font-size:15px}
 .card .go{display:inline-block;margin-top:14px;background:var(--teal);color:#fff;border-radius:8px;padding:8px 18px;font-weight:600;font-size:15px}
-.note{margin-top:40px;font-size:14px;color:var(--grey)}
+.card .n{float:right;font-size:14px;color:var(--grey)}
+.empty{color:var(--grey)}
 </style>
 </head>
 <body>
 <header>
-  <div class="crumbs">440-2104/01 (2026/2027 ZS) / Příklady k procvičení</div>
-  <h1><i></i>Výběr testu</h1>
+  <div class="crumbs" id="crumbs">Příklady k procvičení</div>
+  <h1><i></i><span id="nadpis">Výběr předmětu</span></h1>
 </header>
 <main>
-  <div class="list" id="list"><p>Načítám testy…</p></div>
-
+  <div class="list" id="list"><p>Načítám…</p></div>
 </main>
 <script>
-/* Záložní seznam – použije se, když nejde načíst obsah složky přes GitHub API
-   (např. při otevření souboru lokálně). Nové testy sem přidávat nemusíš. */
-const ZALOZNI=['test2.html','test-kodovani.html'];
+/* Předměty = podsložky ve složce testy/. Nový předmět = nová složka (stačí do ní dát test).
+   Tady se jen nastavuje hezký název, popis a pořadí; neznámá složka se zobrazí pod svým jménem. */
+const PREDMETY={
+  zds:{nazev:'ZDS',kod:'440-2104/01 (2026/2027 ZS)'},
+  fyzika:{nazev:'Fyzika',popis:''},
+  matematika:{nazev:'Matematika',popis:''},
+};
+/* Záložní seznam testů – použije se, když nejde načíst GitHub API (např. lokálně). */
+const ZALOZNI={zds:['test2.html','test-kodovani.html'],fyzika:[],matematika:[]};
 
-/* Repozitář se zjistí z adresy GitHub Pages (uzivatel.github.io/repo/), jinak výchozí. */
 function repo(){
   const h=location.hostname;
   if(h.endsWith('.github.io')){const r=location.pathname.split('/').filter(Boolean)[0];
     return{owner:h.split('.')[0],name:r&&!r.endsWith('.html')?r:h}}
   return{owner:'jonnnyyyyy',name:'skolnitesty'};
 }
-async function soubory(){
-  try{const {owner,name}=repo();
-    const r=await fetch(`https://api.github.com/repos/${owner}/${name}/contents/testy`);
-    if(!r.ok)throw 0;
-    const a=(await r.json()).filter(f=>f.type==='file'&&f.name.endsWith('.html')).map(f=>f.name);
-    if(a.length)return a;
-  }catch(e){}
-  return ZALOZNI;
+async function api(cesta){
+  const {owner,name}=repo();
+  const r=await fetch(`https://api.github.com/repos/${owner}/${name}/contents/${cesta}`);
+  if(!r.ok)throw 0;return r.json();
 }
-async function info(f){
-  try{const t=await (await fetch('testy/'+f)).text();
+async function slozky(){
+  try{const a=(await api('testy')).filter(f=>f.type==='dir').map(f=>f.name);if(a.length)return a}catch(e){}
+  return Object.keys(ZALOZNI);
+}
+async function testy(p){
+  try{return (await api('testy/'+p)).filter(f=>f.type==='file'&&f.name.endsWith('.html')).map(f=>f.name)}
+  catch(e){return ZALOZNI[p]||[]}
+}
+async function info(p,f){
+  try{const t=await (await fetch(`testy/${p}/${f}`)).text();
     const d=new DOMParser().parseFromString(t,'text/html');
     return{f,title:(d.title||f).replace(/\s*–\s*procvičování\s*$/i,''),desc:d.querySelector('meta[name=description]')?.content||''}
   }catch(e){return{f,title:f.replace(/\.html$/,''),desc:''}}
 }
-(async()=>{
-  const items=await Promise.all((await soubory()).map(info));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const meta=p=>PREDMETY[p]||{nazev:p.charAt(0).toUpperCase()+p.slice(1),popis:''};
+const poradi=Object.keys(PREDMETY);
+const list=document.getElementById('list');
+
+async function vyberPredmetu(){
+  document.title='Školní testy – výběr předmětu';
+  const ps=await slozky();
+  ps.sort((a,b)=>((poradi.indexOf(a)+1)||99)-((poradi.indexOf(b)+1)||99)||a.localeCompare(b,'cs'));
+  const pocty=await Promise.all(ps.map(testy));
+  list.innerHTML=ps.map((p,i)=>{const m=meta(p),n=pocty[i].length;
+    return `<a class="card" href="?p=${encodeURIComponent(p)}"><span class="n">${n?n+' '+(n==1?'test':n<5?'testy':'testů'):'zatím bez testů'}</span><h2>${esc(m.nazev)}</h2><p>${esc(m.popis||'')}</p><span class="go">Otevřít</span></a>`}).join('');
+}
+async function vyberTestu(p){
+  const m=meta(p);
+  document.title=`${m.nazev} – výběr testu`;
+  document.getElementById('nadpis').textContent=m.nazev;
+  document.getElementById('crumbs').innerHTML=`<a href="./">← Předměty</a>${m.kod?' / '+esc(m.kod):''} / Příklady k procvičení`;
+  const items=await Promise.all((await testy(p)).map(f=>info(p,f)));
   items.sort((a,b)=>a.title.localeCompare(b.title,'cs',{numeric:true}));
-  document.getElementById('list').innerHTML=items.map(t=>
-    `<a class="card" href="testy/${encodeURIComponent(t.f)}"><h2>${t.title}</h2><p>${t.desc}</p><span class="go">Otevřít test</span></a>`).join('');
-})();
+  list.innerHTML=items.length?items.map(t=>
+    `<a class="card" href="testy/${encodeURIComponent(p)}/${encodeURIComponent(t.f)}"><h2>${esc(t.title)}</h2><p>${esc(t.desc)}</p><span class="go">Otevřít test</span></a>`).join('')
+    :'<p class="empty">Zatím tu nejsou žádné testy.</p>';
+}
+const p=new URLSearchParams(location.search).get('p');
+p?vyberTestu(p):vyberPredmetu();
 </script>
 </body>
 </html>
